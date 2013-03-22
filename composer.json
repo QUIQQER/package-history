@@ -1,0 +1,29 @@
+{
+    "name" : "quiqqer/history",
+    "type" : "quiqqer-plugin",
+    "description" : "QUIQQER history functionality for sites",
+
+    "version" : "0.1.0",
+    "license" : "Apache 2.0",
+
+    "authors" : [{
+        "name": "Henning Leutz",
+        "email": "leutz@pcsg.de",
+        "homepage": "http://www.pcsg.de",
+        "role": "Developer"
+    }],
+
+    "support" : {
+        "email" : "support@pcsg.de"
+    },
+
+    "require": {
+        "quiqqer/quiqqer" : "1.*"
+    },
+
+    "autoload": {
+        "psr-0" : {
+            "QUI\\projects\\site" : "/"
+        }
+    }
+}

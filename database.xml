@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+
+    <project>
+        <table name="_archiv">
+            <field type="text">data</field>
+        </table>
+    </project>
+
+</database>
