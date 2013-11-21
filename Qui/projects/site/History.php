@@ -20,11 +20,11 @@ class History
 {
     /**
      * Saves an history
-     * @param Projects_Site|Projects_Site_Edit $Site
+     * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
      */
     static function onSave($Site)
     {
-        /* @var $Site Projects_Site_Edit */
+        /* @var $Site \QUI\Projects\Site\Edit */
         $Site;
     }
 }
