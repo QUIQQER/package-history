@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<site>
+
+    <!-- extend every panel -->
+    <window>
+        <tab name="archiv">
+            <text>Verlauf</text>
+            <image>icon-time</image>
+            <onload require="package/quiqqer/history/bin/Site"></onload>
+
+        </tab>
+    </window>
+
+</site>

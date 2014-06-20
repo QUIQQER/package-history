@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
 
-    <project>
-        <table name="_archiv">
+    <projects>
+        <table name="archiv">
+            <field type="bigint(20)">id</field>
+            <field type="datetime">created</field>
             <field type="text">data</field>
+            <field type="int(11)">uid</field>
         </table>
-    </project>
+    </projects>
 
 </database>

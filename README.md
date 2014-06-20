@@ -3,5 +3,6 @@
 
 The QUIQQER History Package provids history / archiv functionality for a page.
 
-- It saves the changes of a page
-- It can restore older versions of pages
++ Saves the changes of a site
++ Restore older versions of site
++ Compares different versions of a site
