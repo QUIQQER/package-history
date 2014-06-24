@@ -2,7 +2,7 @@
 <database>
 
     <projects>
-        <table name="archiv">
+        <table name="archiv" no-auto-update="1">
             <field type="bigint(20)">id</field>
             <field type="datetime">created</field>
             <field type="text">data</field>

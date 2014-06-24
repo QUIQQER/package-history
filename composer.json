@@ -26,12 +26,5 @@
         "psr-0" : {
             "QUI" : "lib/"
         }
-    },
-
-    "extra": {
-        "component": {
-            "files": ["bin/**"],
-            "name": "quiqqer/history"
-        }
     }
 }

@@ -33,6 +33,48 @@ class History
             'data'    => json_encode( $Site->getAttributes() ),
             'uid'     => \QUI::getUserBySession()->getId()
         ));
+
+        // check limit
+        $limit = $Project->getConfig( 'history.limits.limitPerSite' );
+
+        if ( $limit === false || !$limit ) {
+            return;
+        }
+
+        $result = \QUI::getDataBase()->fetch(array(
+            'from' => $table,
+            'count' => array(
+                'select' => 'id',
+                'as'     => 'count'
+            ),
+            'where' => array(
+                'id' => $Site->getId()
+            )
+        ));
+
+        $count = (int)$result[ 0 ][ 'count' ];
+
+        if ( $count < $limit ) {
+            return;
+        }
+
+        // delete the oldest
+        $overflow = $count - $limit;
+
+        // could not delete directly
+        // some mysql version dont support that, so we must delete the entries in an extra step
+        $result = \QUI::getDataBase()->fetch(array(
+            'from'   => $table,
+            'where'  => array(
+                'id' => $Site->getId()
+            ),
+            'order' => 'created ASC',
+            'limit' => '0,'. $overflow
+        ));
+
+        foreach ( $result as $entry ) {
+            \QUI::getDataBase()->delete( $table, $entry );
+        }
     }
 
     /**
@@ -50,7 +92,10 @@ class History
 
         $list = \QUI::getDataBase()->fetch(array(
             'from'  => $table,
-            'order' => 'created DESC'
+            'order' => 'created DESC',
+            'where' => array(
+                'id' => $Site->getId()
+            )
         ));
 
         foreach ( $list as $entry )

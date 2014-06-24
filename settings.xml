@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<quiqqer>
+
+    <!-- project settings -->
+    <project>
+        <settings name="history">
+            <!-- config params -->
+            <config>
+                <section name="limits">
+                    <conf name="limitPerSite">
+                        <type><![CDATA[bool]]></type>
+                        <defaultvalue>20</defaultvalue>
+                    </conf>
+                </section>
+            </config>
+
+            <!-- config window -->
+            <window>
+                <categories>
+                    <category name="history">
+                        <text>Archiv</text>
+                        <icon>icon-time</icon>
+
+                        <settings title="limits" name="limits">
+                            <title>Archiv Einstellungen</title>
+                            <input conf="history.limits.limitPerSite" type="text">
+                                <text>Limit Archiveinträge.</text>
+                                <description>Wieviel Versionen sollen pro Seite maximal archiviert werden?</description>
+                            </input>
+                        </settings>
+                    </category>
+                </categories>
+            </window>
+
+        </settings>
+    </project>
+
+</quiqqer>
