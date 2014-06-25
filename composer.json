@@ -19,7 +19,7 @@
 
     "require": {
         "quiqqer/quiqqer" : "*",
-        "icap/html-diff"  : "dev-master"
+        "icap/html-diff"  : ">=1.0.1"
     },
 
     "autoload": {
