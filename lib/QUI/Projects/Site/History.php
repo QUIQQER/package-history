@@ -147,7 +147,10 @@ class History
         if ( !isset( $result[0] ) )
         {
             throw new \QUI\Exception(
-                'History entry not exist'
+                \QUI::getLocale()->get(
+                    'quiqqer/history',
+                    'exception.history.entry.not.exist'
+                )
             );
         }
 

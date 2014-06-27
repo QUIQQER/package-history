@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales>
+
+    <groups name="quiqqer/history" datatype="js">
+
+        <locale name="btn.compare.text">
+            <de><![CDATA[Beide Versionen vergleichen]]></de>
+            <en><![CDATA[Compare the two versions]]></en>
+        </locale>
+        <locale name="btn.preview.text">
+            <de><![CDATA[Vorschau anzeigen]]></de>
+            <en><![CDATA[Show preview]]></en>
+        </locale>
+        <locale name="btn.revert.text">
+            <de><![CDATA[Vorschau zurückspielen]]></de>
+            <en><![CDATA[Revert version]]></en>
+        </locale>
+
+        <locale name="restore.window.title">
+            <de><![CDATA[Archiveintrag wieder herstellen?]]></de>
+            <en><![CDATA[Restore archive entry again?]]></en>
+        </locale>
+        <locale name="restore.window.text">
+            <de><![CDATA[Archiveintrag wieder herstellen?]]></de>
+            <en><![CDATA[Restore archive entry again?]]></en>
+        </locale>
+        <locale name="restore.window.information">
+            <de><![CDATA[
+                Möchten sie den Archiveintrag vom [date] wirklich zurück spielen?<br />
+                Die aktuellen Daten der Seite werden somit überschrieben.
+            ]]></de>
+            <en><![CDATA[
+                Would you really restore the archive entry of [date]?<br />
+                The current data for the site are thus overwritten.
+            ]]></en>
+        </locale>
+
+    </groups>
+
+    <groups name="quiqqer/history" datatype="php">
+
+        <locale name="exception.history.entry.not.exist">
+            <de><![CDATA[Der History Eintrag existiert nicht.]]></de>
+            <en><![CDATA[History entry not exist.]]></en>
+        </locale>
+
+    </groups>
+
+</locales>

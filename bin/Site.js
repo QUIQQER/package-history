@@ -96,17 +96,17 @@ define([
                     dataType  : 'node',
                     width     : 50
                 }, {
-                    header    : 'Datum',
+                    header    : Locale.get( 'quiqqer/system', 'createdate' ),
                     dataIndex : 'created',
                     dataType  : 'string',
                     width     : 200
                 }, {
-                    header    : 'Benutzer',
+                    header    : Locale.get( 'quiqqer/system', 'username' ),
                     dataIndex : 'username',
                     dataType  : 'string',
                     width     : 100
                 }, {
-                    header    : 'Benutzer-ID',
+                    header    : Locale.get( 'quiqqer/system', 'user_id' ),
                     dataIndex : 'uid',
                     dataType  : 'string',
                     width     : 100
@@ -114,7 +114,7 @@ define([
 
                 buttons : [{
                     name : 'compare',
-                    text : 'Zwei Versionen Vergleichen',
+                    text : Locale.get( 'quiqqer/history', 'btn.compare.text' ),
                     disabled : true,
                     events : {
                         onClick : self.openCompare
@@ -123,7 +123,7 @@ define([
                     type : 'seperator'
                 }, {
                     name : 'preview',
-                    text : 'Version anzeigen',
+                    text : Locale.get( 'quiqqer/history', 'btn.preview.text' ),
                     disabled  : true,
                     textimage : 'icon-eye-open',
                     events : {
@@ -131,7 +131,7 @@ define([
                     }
                 }, {
                     name : 'revert',
-                    text : 'Version zurückspielen',
+                    text : Locale.get( 'quiqqer/history', 'btn.revert.text' ),
                     disabled  : true,
                     textimage : 'icon-retweet',
                     events : {
@@ -393,10 +393,12 @@ define([
             }
 
             new QUIConfirm({
-                title  : 'Archiveintrag zurück spielen?',
-                icon   : 'icon-retweet',
-                text   : 'Archiveintrag zurück spielen?',
-                information  : 'Möchten sie den Archiveintrag vom '+ data[ 0 ].created +' wirklich zurück spielen?',
+                title : Locale.get('quiqqer/history', 'restore.window.title'),
+                icon  : 'icon-retweet',
+                text  : Locale.get('quiqqer/history', 'restore.window.text'),
+                information : Locale.get('quiqqer/history', 'restore.window.title', {
+                    date : data[ 0 ].created
+                }),
                 texticon : 'icon-retweet',
                 events :
                 {
