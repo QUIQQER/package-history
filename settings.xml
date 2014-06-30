@@ -19,14 +19,22 @@
             <window>
                 <categories>
                     <category name="history">
-                        <text>Archiv</text>
+                        <text>
+                            <locale group="quiqqer/history" var="title" />
+                        </text>
                         <icon>icon-time</icon>
 
                         <settings title="limits" name="limits">
-                            <title>Archiv Einstellungen</title>
+                            <title>
+                                <locale group="quiqqer/history" var="settings.title" />
+                            </title>
                             <input conf="history.limits.limitPerSite" type="text">
-                                <text>Limit Archiveinträge.</text>
-                                <description>Wieviel Versionen sollen pro Seite maximal archiviert werden?</description>
+                                <text>
+                                    <locale group="quiqqer/history" var="settings.limit.text" />
+                                </text>
+                                <description>
+                                    <locale group="quiqqer/history" var="settings.limit.description" />
+                                </description>
                             </input>
                         </settings>
                     </category>

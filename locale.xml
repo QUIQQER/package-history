@@ -6,6 +6,18 @@
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
         </locale>
+        <locale name="settings.title">
+            <de><![CDATA[Verlauf Einstellungen]]></de>
+            <en><![CDATA[History settings]]></en>
+        </locale>
+        <locale name="settings.limit.text">
+            <de><![CDATA[Limit der Verlaufeinträge.]]></de>
+            <en><![CDATA[Limit of the history entries ]]></en>
+        </locale>
+        <locale name="settings.limit.description">
+            <de><![CDATA[Wieviel Versionen sollen pro Seite maximal erstellt werden?]]></de>
+            <en><![CDATA[How many versions should be created per page maximum?]]></en>
+        </locale>
 
         <locale name="btn.compare.text">
             <de><![CDATA[Beide Versionen vergleichen]]></de>
