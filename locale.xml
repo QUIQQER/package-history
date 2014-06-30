@@ -2,6 +2,10 @@
 <locales>
 
     <groups name="quiqqer/history" datatype="js">
+        <locale name="title">
+            <de><![CDATA[Verlauf]]></de>
+            <en><![CDATA[History]]></en>
+        </locale>
 
         <locale name="btn.compare.text">
             <de><![CDATA[Beide Versionen vergleichen]]></de>
