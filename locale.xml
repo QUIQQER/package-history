@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
 
-    <groups name="quiqqer/history" datatype="js">
+    <groups name="quiqqer/history" datatype="js,php">
         <locale name="title">
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
@@ -18,7 +18,9 @@
             <de><![CDATA[Wieviel Versionen sollen pro Seite maximal erstellt werden?]]></de>
             <en><![CDATA[How many versions should be created per page maximum?]]></en>
         </locale>
+    </groups>
 
+    <groups name="quiqqer/history" datatype="js">
         <locale name="btn.compare.text">
             <de><![CDATA[Beide Versionen vergleichen]]></de>
             <en><![CDATA[Compare the two versions]]></en>
@@ -50,16 +52,13 @@
                 The current data for the site are thus overwritten.
             ]]></en>
         </locale>
-
     </groups>
 
     <groups name="quiqqer/history" datatype="php">
-
         <locale name="exception.history.entry.not.exist">
             <de><![CDATA[Der History Eintrag existiert nicht.]]></de>
             <en><![CDATA[History entry not exist.]]></en>
         </locale>
-
     </groups>
 
 </locales>

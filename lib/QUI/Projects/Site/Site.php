@@ -1,10 +1,10 @@
 <?php
 
 /**
- * This file contains \QUI\Projects\Site\History
+ * This file contains \QUI\History\Site
  */
 
-namespace QUI\Projects\Site;
+namespace QUI\History;
 
 /**
  * QUIQQER Site History functionality
@@ -15,7 +15,7 @@ namespace QUI\Projects\Site;
  * @author www.pcsg.de (Henning Leutz)
  */
 
-class History
+class Site
 {
     /**
      * Saves an history entry
@@ -147,10 +147,7 @@ class History
         if ( !isset( $result[0] ) )
         {
             throw new \QUI\Exception(
-                \QUI::getLocale()->get(
-                    'quiqqer/history',
-                    'exception.history.entry.not.exist'
-                )
+                'History entry not exist'
             );
         }
 
@@ -181,9 +178,8 @@ class History
             $Site->setAttribute( $key, $value );
         }
 
-        $Template = new \QUI\Template();
-        $content  = $Template->fetchTemplate( $Site );
-        $content  = \QUI::getRewrite()->outputFilter( $content );
+        $content = \QUI::getTemplateManager()->fetchTemplate( $Site );
+        $content = \QUI::getRewrite()->outputFilter( $content );
 
         return $content;
     }

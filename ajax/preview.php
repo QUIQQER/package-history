@@ -6,7 +6,7 @@
 
 function package_quiqqer_history_ajax_preview($project, $lang, $id, $date)
 {
-    $History = new \QUI\Projects\Site\History();
+    $History = new \QUI\History\Site();
     $Project = \QUI::getProject( $project, $lang );
     $Site    = $Project->get( $id );
 

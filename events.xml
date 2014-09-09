@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <events>
 
-    <event on="onSiteSave" fire="\QUI\Projects\Site\History::onSave" />
+    <event on="onSiteSave" fire="\QUI\History\Site::onSave" />
 
 </events>

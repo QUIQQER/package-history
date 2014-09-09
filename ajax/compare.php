@@ -6,7 +6,7 @@
 
 function package_quiqqer_history_ajax_compare($project, $lang, $id, $date1, $date2)
 {
-    $History = new \QUI\Projects\Site\History();
+    $History = new \QUI\History\Site();
     $Project = \QUI::getProject( $project, $lang );
     $Site    = $Project->get( $id );
 
