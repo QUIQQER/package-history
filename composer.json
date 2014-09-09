@@ -1,9 +1,9 @@
 {
     "name" : "quiqqer/history",
-    "type" : "quiqqer-plugin",
+    "type" : "quiqqer-library",
     "description" : "QUIQQER history functionality for sites",
 
-    "version" : "dev-master",
+    "version" : "dev-dev",
     "license" : "GPL-3.0+",
 
     "authors" : [{
