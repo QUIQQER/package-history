@@ -3,7 +3,7 @@
     "type" : "quiqqer-library",
     "description" : "QUIQQER history functionality for sites",
 
-    "version" : "dev-dev",
+    "version" : "dev-master",
     "license" : "GPL-3.0+",
 
     "authors" : [{
