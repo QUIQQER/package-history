@@ -3,7 +3,6 @@
  * Site History Control
  * Display the history of a site. You can compare and restore older versions of a site.
  *
- * @module URL_OPT_DIR/quiqqer/history/bin/Site
  * @author www.pcsg.de (Henning Leutz)
  */
 
@@ -19,7 +18,7 @@ define([
     'Ajax',
     'Locale',
 
-    'css!URL_OPT_DIR/quiqqer/history/bin/Site.css'
+    'css!package/quiqqer/history/bin/Site.css'
 
 ], function(QUI, QUIControl, QUILoader, QUIWindow, QUIConfirm, Grid, Ajax, Locale)
 {
@@ -28,7 +27,7 @@ define([
     return new Class({
 
         Extends : QUIControl,
-        Type    : 'URL_OPT_DIR/quiqqer/history/bin/Site',
+        Type    : 'quiqqer/history/bin/Site',
 
         Binds : [
             '$onInject',
