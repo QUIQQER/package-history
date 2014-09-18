@@ -198,9 +198,10 @@ class Site
         $entry1 = self::getHTMLFromHistoryEntry( $Site, $date1 );
         $entry2 = self::getHTMLFromHistoryEntry( $Site, $date2 );
 
-        $Diff = new \Icap\HtmlDiff\HtmlDiff( $entry1, $entry2, true );
+        $Diff = new \HtmlDiff( $entry1, $entry2 );
+        $Diff->build();
 
-        return $Diff->outputDiff()->toString();
+        return $Diff->getDifference();
     }
 
     /**
