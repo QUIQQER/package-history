@@ -198,6 +198,10 @@ class Site
         $entry1 = self::getHTMLFromHistoryEntry( $Site, $date1 );
         $entry2 = self::getHTMLFromHistoryEntry( $Site, $date2 );
 
+        if ( !class_exists( 'HtmlDiff' ) ) {
+            require_once OPT_DIR .'rashid2538/php-htmldiff/HtmlDiff.php';
+        }
+
         $Diff = new \HtmlDiff( $entry1, $entry2 );
         $Diff->build();
 
