@@ -3,11 +3,21 @@
  * Site History Control
  * Display the history of a site. You can compare and restore older versions of a site.
  *
- * @module URL_OPT_DIR/quiqqer/history/bin/Site
+ * @module package/quiqqer/history/bin/Site
  * @author www.pcsg.de (Henning Leutz)
+ *
+ * @require qui/QUI
+ * @require qui/controls/Control
+ * @require qui/controls/loader/Loader
+ * @require qui/controls/windows/Popup
+ * @require qui/controls/windows/Confirm
+ * @require controls/grid/Grid
+ * @require Ajax
+ * @require Locale
+ * @require css!URL_OPT_DIR/quiqqer/history/bin/Site.css
  */
 
-define([
+define('package/quiqqer/history/bin/Site', [
 
     'qui/QUI',
     'qui/controls/Control',
@@ -21,14 +31,16 @@ define([
 
     'css!URL_OPT_DIR/quiqqer/history/bin/Site.css'
 
-], function(QUI, QUIControl, QUILoader, QUIWindow, QUIConfirm, Grid, Ajax, Locale)
+], function(QUI, QUIControl, QUILoader, QUIWindow, QUIConfirm, Grid, Ajax, QUILocale)
 {
     "use strict";
+
+    var lg = 'quiqqer/history';
 
     return new Class({
 
         Extends : QUIControl,
-        Type    : 'URL_OPT_DIR/quiqqer/history/bin/Site',
+        Type    : 'package/quiqqer/history/bin/Site',
 
         Binds : [
             '$onInject',
@@ -38,9 +50,8 @@ define([
         ],
 
         options : {
-            project : false,
-            lang    : false,
-            id      : false
+            id   : false,
+            Site : false
         },
 
         initialize : function(options)
@@ -58,18 +69,14 @@ define([
                 return;
             }
 
-            var Site    = options.Site,
-                Project = Site.getProject();
-
-            this.setAttribute( 'project', Project.getName() );
-            this.setAttribute( 'lang', Project.getLang() );
-            this.setAttribute( 'id', Site.getId() );
+            this.$Site    = options.Site;
+            this.$Project = this.$Site.getProject();
         },
 
         /**
          * Return the DOMNode Element
          *
-         * @return {DOMNode}
+         * @return {HTMLElement}
          */
         create : function()
         {
@@ -97,17 +104,17 @@ define([
                     dataType  : 'node',
                     width     : 50
                 }, {
-                    header    : 'Datum',
+                    header    : QUILocale.get( 'quiqqer/system', 'c_date' ),
                     dataIndex : 'created',
                     dataType  : 'string',
                     width     : 200
                 }, {
-                    header    : 'Benutzer',
+                    header    : QUILocale.get( 'quiqqer/system', 'c_user' ),
                     dataIndex : 'username',
                     dataType  : 'string',
                     width     : 100
                 }, {
-                    header    : 'Benutzer-ID',
+                    header    : QUILocale.get( 'quiqqer/system', 'user_id' ),
                     dataIndex : 'uid',
                     dataType  : 'string',
                     width     : 100
@@ -115,7 +122,7 @@ define([
 
                 buttons : [{
                     name : 'compare',
-                    text : 'Zwei Versionen Vergleichen',
+                    text : QUILocale.get( lg, 'btn.compare.text' ),
                     disabled : true,
                     events : {
                         onClick : self.openCompare
@@ -124,7 +131,7 @@ define([
                     type : 'seperator'
                 }, {
                     name : 'preview',
-                    text : 'Version anzeigen',
+                    text : QUILocale.get( lg, 'btn.preview.text' ),
                     disabled  : true,
                     textimage : 'icon-eye-open',
                     events : {
@@ -132,7 +139,7 @@ define([
                     }
                 }, {
                     name : 'revert',
-                    text : 'Version zurückspielen',
+                    text : QUILocale.get( lg, 'btn.revert.text' ),
                     disabled  : true,
                     textimage : 'icon-retweet',
                     events : {
@@ -177,7 +184,7 @@ define([
 
                 var inputClick = function() {
                     self.$refreshGridButtons();
-                }
+                };
 
                 for ( var i = 0, len = result.length; i < len; i++ )
                 {
@@ -210,9 +217,8 @@ define([
 
             }, {
                 'package' : 'quiqqer/history',
-                project   : this.getAttribute( 'project' ),
-                lang      : this.getAttribute( 'lang' ),
-                id        : this.getAttribute( 'id' )
+                project   : this.$Project.encode(),
+                id        : this.$Site.getId()
             });
         },
 
@@ -256,10 +262,8 @@ define([
                     continue;
                 }
 
-                if ( buttons[ i ].getAttribute( 'name' ) == 'revert' )
-                {
+                if ( buttons[ i ].getAttribute( 'name' ) == 'revert' ) {
                     Revert = buttons[ i ];
-                    continue;
                 }
             }
 
@@ -386,7 +390,6 @@ define([
         openRestore : function()
         {
             var self = this,
-                size = document.body.getSize(),
                 data = this.$Grid.getSelectedData();
 
             if ( !data.length ) {
@@ -394,19 +397,20 @@ define([
             }
 
             new QUIConfirm({
-                title  : 'Archiveintrag zurück spielen?',
-                icon   : 'icon-retweet',
-                text   : 'Archiveintrag zurück spielen?',
-                information  : 'Möchten sie den Archiveintrag vom '+ data[ 0 ].created +' wirklich zurück spielen?',
+                icon  : 'icon-retweet',
+                title : QUILocale.get( lg, 'restore.window.title' ),
+                text  : QUILocale.get( lg, 'restore.window.text' ),
+                information : QUILocale.get( lg, 'restore.window.information', {
+                    date : data[ 0 ].created
+                }),
                 texticon : 'icon-retweet',
-                events :
+                events   :
                 {
                     onSubmit : function(Win)
                     {
                         Win.Loader.show();
 
-                        self.restore( data[ 0 ].created, function(result)
-                        {
+                        self.restore( data[ 0 ].created, function() {
 
                         });
                     }
@@ -432,16 +436,15 @@ define([
                 callback( result );
             }, {
                 'package' : 'quiqqer/history',
-                project   : this.getAttribute( 'project' ),
-                lang      : this.getAttribute( 'lang' ),
-                id        : this.getAttribute( 'id' ),
+                project   : this.$Project.encode(),
+                id        : this.$Site.getId(),
                 date1     : date1,
                 date2     : date2
             });
         },
 
         /**
-         * restore a history version of the site
+         * restore a history entry of the site
          *
          * @param {String} date - date of the history entry
          * @param {Function} callback - callback function after finish
@@ -468,9 +471,8 @@ define([
                 callback( result );
             }, {
                 'package' : 'quiqqer/history',
-                project   : this.getAttribute( 'project' ),
-                lang      : this.getAttribute( 'lang' ),
-                id        : this.getAttribute( 'id' ),
+                project   : this.$Project.encode(),
+                id        : this.$Site.getId(),
                 date      : date
             });
         },
@@ -488,13 +490,10 @@ define([
                 callback( result );
             }, {
                 'package' : 'quiqqer/history',
-                project   : this.getAttribute( 'project' ),
-                lang      : this.getAttribute( 'lang' ),
-                id        : this.getAttribute( 'id' ),
+                project   : this.$Project.encode(),
+                id        : this.$Site.getId(),
                 date      : date
             });
         }
-
     });
-
 });

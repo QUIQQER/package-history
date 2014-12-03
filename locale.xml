@@ -30,7 +30,7 @@
             <en><![CDATA[Show preview]]></en>
         </locale>
         <locale name="btn.revert.text">
-            <de><![CDATA[Vorschau zurückspielen]]></de>
+            <de><![CDATA[Version zurückspielen]]></de>
             <en><![CDATA[Revert version]]></en>
         </locale>
 
