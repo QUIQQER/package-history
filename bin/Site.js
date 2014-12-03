@@ -167,6 +167,7 @@ define('package/quiqqer/history/bin/Site', [
 
             this.$Grid.setHeight( elmSize.y );
             this.$Grid.setWidth( elmSize.x );
+            this.$Grid.resize();
         },
 
         /**
