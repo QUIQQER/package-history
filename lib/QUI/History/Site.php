@@ -19,6 +19,8 @@ use QUI;
 
 class Site
 {
+    static $cache = array();
+
     /**
      * Saves an history entry
      *
@@ -29,12 +31,37 @@ class Site
         $Project = $Site->getProject();
         $table   = QUI::getDBProjectTableName( 'archiv', $Project );
 
-        QUI::getDataBase()->insert($table, array(
-            'id'      => $Site->getId(),
-            'created' => date( 'Y-m-d H:i:s' ),
-            'data'    => json_encode( $Site->getAttributes() ),
-            'uid'     => QUI::getUserBySession()->getId()
-        ));
+        $cacheId = $Project->getName() .'_'. $Project->getLang() .'_'. $Site->getId();
+
+
+        // wait 10 seconds
+        // we need not every 10 seconds a history entry
+        // @todo maybe settings for minutes or hours
+        if ( isset( self::$cache[ $cacheId ] ) )
+        {
+            $diff = time() - self::$cache[ $cacheId ];
+
+            if ( $diff <= 10 ) {
+                return;
+            }
+        }
+
+        self::$cache[ $cacheId ] = time();
+
+        try
+        {
+            QUI::getDataBase()->insert($table, array(
+                'id'      => $Site->getId(),
+                'created' => date('Y-m-d H:i:s'),
+                'data'    => json_encode($Site->getAttributes()),
+                'uid'     => QUI::getUserBySession()->getId()
+            ));
+
+        } catch ( QUI\Exception $Exception )
+        {
+            QUI\System\Log::addAlert( $Exception->getMessage() );
+            return;
+        }
 
         // check limit
         $limit = $Project->getConfig( 'history.limits.limitPerSite' );
