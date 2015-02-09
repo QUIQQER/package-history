@@ -18,7 +18,7 @@
     },
 
     "require": {
-        "quiqqer/quiqqer" : "*",
+        "quiqqer/quiqqer" : "*@dev",
         "rashid2538/php-htmldiff" : "dev-master"
     },
 
