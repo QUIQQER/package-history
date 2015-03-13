@@ -6,6 +6,8 @@
 
 namespace QUI\History;
 
+use QUI;
+
 /**
  * QUIQQER Site History functionality
  *
@@ -17,6 +19,8 @@ namespace QUI\History;
 
 class Site
 {
+    static $cache = array();
+
     /**
      * Saves an history entry
      *
@@ -25,14 +29,39 @@ class Site
     static function onSave($Site)
     {
         $Project = $Site->getProject();
-        $table   = \QUI::getDBProjectTableName( 'archiv', $Project );
+        $table   = QUI::getDBProjectTableName( 'archiv', $Project );
 
-        \QUI::getDataBase()->insert($table, array(
-            'id'      => $Site->getId(),
-            'created' => date( 'Y-m-d H:i:s' ),
-            'data'    => json_encode( $Site->getAttributes() ),
-            'uid'     => \QUI::getUserBySession()->getId()
-        ));
+        $cacheId = $Project->getName() .'_'. $Project->getLang() .'_'. $Site->getId();
+
+
+        // wait 10 seconds
+        // we need not every 10 seconds a history entry
+        // @todo maybe settings for minutes or hours
+        if ( isset( self::$cache[ $cacheId ] ) )
+        {
+            $diff = time() - self::$cache[ $cacheId ];
+
+            if ( $diff <= 10 ) {
+                return;
+            }
+        }
+
+        self::$cache[ $cacheId ] = time();
+
+        try
+        {
+            QUI::getDataBase()->insert($table, array(
+                'id'      => $Site->getId(),
+                'created' => date('Y-m-d H:i:s'),
+                'data'    => json_encode($Site->getAttributes()),
+                'uid'     => QUI::getUserBySession()->getId()
+            ));
+
+        } catch ( QUI\Exception $Exception )
+        {
+            QUI\System\Log::addAlert( $Exception->getMessage() );
+            return;
+        }
 
         // check limit
         $limit = $Project->getConfig( 'history.limits.limitPerSite' );
@@ -41,7 +70,7 @@ class Site
             return;
         }
 
-        $result = \QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch(array(
             'from' => $table,
             'count' => array(
                 'select' => 'id',
@@ -63,7 +92,7 @@ class Site
 
         // could not delete directly
         // some mysql version dont support that, so we must delete the entries in an extra step
-        $result = \QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch(array(
             'from'   => $table,
             'where'  => array(
                 'id' => $Site->getId()
@@ -73,7 +102,7 @@ class Site
         ));
 
         foreach ( $result as $entry ) {
-            \QUI::getDataBase()->delete( $table, $entry );
+            QUI::getDataBase()->delete( $table, $entry );
         }
     }
 
@@ -86,11 +115,11 @@ class Site
     static function getList($Site)
     {
         $Project = $Site->getProject();
-        $table   = \QUI::getDBProjectTableName( 'archiv', $Project );
+        $table   = QUI::getDBProjectTableName( 'archiv', $Project );
         $result  = array();
 
 
-        $list = \QUI::getDataBase()->fetch(array(
+        $list = QUI::getDataBase()->fetch(array(
             'from'  => $table,
             'order' => 'created DESC',
             'where' => array(
@@ -104,10 +133,10 @@ class Site
 
             try
             {
-                $User     = \QUI::getUsers()->get( $entry['uid'] );
+                $User     = QUI::getUsers()->get( $entry['uid'] );
                 $username = $User->getName();
 
-            } catch ( \QUI\Exception $Exception )
+            } catch ( QUI\Exception $Exception )
             {
 
             }
@@ -127,16 +156,18 @@ class Site
      * Return the history entry from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param timestamp|Date $date
+     * @param Integer|\DateTime $date
+     * @return Array
+     * @throws QUI\Exception
      */
     static function getHistoryEntry($Site, $date)
     {
         $Date = new \DateTime( $date );
 
         $Project = $Site->getProject();
-        $table   = \QUI::getDBProjectTableName( 'archiv', $Project );
+        $table   = QUI::getDBProjectTableName( 'archiv', $Project );
 
-        $result = \QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch(array(
             'from'  => $table,
             'where' => array(
                 'created' => $Date->format('Y-m-d H:i:s')
@@ -146,7 +177,7 @@ class Site
 
         if ( !isset( $result[0] ) )
         {
-            throw new \QUI\Exception(
+            throw new QUI\Exception(
                 'History entry not exist'
             );
         }
@@ -160,12 +191,12 @@ class Site
      * Return the html from a history entry from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param timestamp|Date $date
+     * @param Integer|\DateTime $date - Timestamp | Date
+     * @return String
      */
     static function getHTMLFromHistoryEntry($Site, $date)
     {
-        $Project = $Site->getProject();
-        $data    = self::getHistoryEntry( $Site, $date );
+        $data = self::getHistoryEntry( $Site, $date );
 
         if ( isset( $data['type'] ) ) {
             $Site->setAttribute( 'type', $data['type'] );
@@ -178,8 +209,8 @@ class Site
             $Site->setAttribute( $key, $value );
         }
 
-        $content = \QUI::getTemplateManager()->fetchTemplate( $Site );
-        $content = \QUI::getRewrite()->outputFilter( $content );
+        $content = QUI::getTemplateManager()->fetchTemplate( $Site );
+        $content = QUI::getRewrite()->outputFilter( $content );
 
         return $content;
     }
@@ -188,8 +219,8 @@ class Site
      * Return the diff between to history entries from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param timestamp|Date $date1
-     * @param timestamp|Date $date2
+     * @param Integer|\DateTime $date1 - Timestamp | Date
+     * @param Integer|\DateTime $date2 - Timestamp | Date
      *
      * @return String
      */
@@ -212,14 +243,14 @@ class Site
      * restore a history entry from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param timestamp|Date $date
+     * @param Integer|\DateTime $date - Timestamp | Date
      */
     static function restoreSite($Site, $date)
     {
         $Project = $Site->getProject();
         $data    = self::getHistoryEntry( $Site, $date );
 
-        $SiteEdit = new \QUI\Projects\Site\Edit( $Project,  $Site->getId() );
+        $SiteEdit = new QUI\Projects\Site\Edit( $Project,  $Site->getId() );
 
         if ( isset( $data['type'] ) ) {
             $SiteEdit->setAttribute( 'type', $data['type'] );
