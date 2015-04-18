@@ -1,6 +1,6 @@
 {
     "name" : "quiqqer/history",
-    "type" : "quiqqer-plugin",
+    "type" : "quiqqer-module",
     "description" : "QUIQQER history functionality for sites",
 
     "version" : "dev-master",
