@@ -1,64 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
-
-    <groups name="quiqqer/history" datatype="js,php">
-        <locale name="title">
-            <de><![CDATA[Verlauf]]></de>
-            <en><![CDATA[History]]></en>
-        </locale>
-        <locale name="settings.title">
-            <de><![CDATA[Verlauf Einstellungen]]></de>
-            <en><![CDATA[History settings]]></en>
-        </locale>
-        <locale name="settings.limit.text">
-            <de><![CDATA[Limit der Verlaufeinträge.]]></de>
-            <en><![CDATA[Limit of the history entries ]]></en>
-        </locale>
-        <locale name="settings.limit.description">
-            <de><![CDATA[Wieviel Versionen sollen pro Seite maximal erstellt werden?]]></de>
-            <en><![CDATA[How many versions should be created per page maximum?]]></en>
-        </locale>
-    </groups>
-
     <groups name="quiqqer/history" datatype="js">
-        <locale name="btn.compare.text">
-            <de><![CDATA[Beide Versionen vergleichen]]></de>
-            <en><![CDATA[Compare the two versions]]></en>
-        </locale>
         <locale name="btn.preview.text">
             <de><![CDATA[Vorschau anzeigen]]></de>
             <en><![CDATA[Show preview]]></en>
+        </locale>
+        <locale name="restore.window.information">
+            <de><![CDATA[Möchten sie den Archiv-Eintrag vom [date] wirklich zurück spielen?<br />
+                Die aktuellen Daten der Seite werden somit überschrieben.]]></de>
+            <en><![CDATA[Would you really restore the archive entry of [date]?<br />
+                The current data for the site are thus overwritten.]]></en>
+        </locale>
+        <locale name="restore.window.text">
+            <de><![CDATA[Archiv-Eintrag wieder herstellen?]]></de>
+            <en><![CDATA[Restore archive entry again?]]></en>
+        </locale>
+        <locale name="restore.window.title">
+            <de><![CDATA[Archiv-Eintrag wieder herstellen?]]></de>
+            <en><![CDATA[Restore archive entry again?]]></en>
         </locale>
         <locale name="btn.revert.text">
             <de><![CDATA[Version zurückspielen]]></de>
             <en><![CDATA[Revert version]]></en>
         </locale>
-
-        <locale name="restore.window.title">
-            <de><![CDATA[Archiveintrag wieder herstellen?]]></de>
-            <en><![CDATA[Restore archive entry again?]]></en>
-        </locale>
-        <locale name="restore.window.text">
-            <de><![CDATA[Archiveintrag wieder herstellen?]]></de>
-            <en><![CDATA[Restore archive entry again?]]></en>
-        </locale>
-        <locale name="restore.window.information">
-            <de><![CDATA[
-                Möchten sie den Archiveintrag vom [date] wirklich zurück spielen?<br />
-                Die aktuellen Daten der Seite werden somit überschrieben.
-            ]]></de>
-            <en><![CDATA[
-                Would you really restore the archive entry of [date]?<br />
-                The current data for the site are thus overwritten.
-            ]]></en>
+        <locale name="btn.compare.text">
+            <de><![CDATA[Beide Versionen vergleichen]]></de>
+            <en><![CDATA[Compare the two versions]]></en>
         </locale>
     </groups>
-
+    <groups name="quiqqer/history" datatype="js,php">
+        <locale name="settings.limit.text">
+            <de><![CDATA[Limit der Verlaufeinträge]]></de>
+            <en><![CDATA[Limit of the history entries]]></en>
+        </locale>
+        <locale name="settings.limit.description">
+            <de><![CDATA[Wie viele Versionen sollen pro Seite maximal erstellt werden?]]></de>
+            <en><![CDATA[How many versions should be created per page maximum?]]></en>
+        </locale>
+        <locale name="title">
+            <de><![CDATA[Verlauf]]></de>
+            <en><![CDATA[History]]></en>
+        </locale>
+        <locale name="settings.title">
+            <de><![CDATA[Verlauf-Einstellungen]]></de>
+            <en><![CDATA[History settings]]></en>
+        </locale>
+    </groups>
     <groups name="quiqqer/history" datatype="php">
         <locale name="exception.history.entry.not.exist">
-            <de><![CDATA[Der History Eintrag existiert nicht.]]></de>
+            <de><![CDATA[Der History-Eintrag existiert nicht.]]></de>
             <en><![CDATA[History entry not exist.]]></en>
         </locale>
     </groups>
-
 </locales>
