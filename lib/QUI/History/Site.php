@@ -18,20 +18,25 @@ use QUI;
  */
 class Site
 {
-    static $cache = array();
+    /**
+     * internal cache
+     * @var array
+     */
+    public static $cache = array();
 
     /**
      * Saves an history entry
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
      */
-    static function onSave($Site)
+    public static function onSave($Site)
     {
         $Project = $Site->getProject();
-        $table = QUI::getDBProjectTableName('archiv', $Project);
+        $table   = QUI::getDBProjectTableName('archiv', $Project);
 
-        $cacheId
-            = $Project->getName().'_'.$Project->getLang().'_'.$Site->getId();
+        $cacheId = $Project->getName() . '_' .
+                   $Project->getLang() . '_' .
+                   $Site->getId();
 
 
         // wait 10 seconds
@@ -49,10 +54,10 @@ class Site
 
         try {
             QUI::getDataBase()->insert($table, array(
-                'id'      => $Site->getId(),
+                'id' => $Site->getId(),
                 'created' => date('Y-m-d H:i:s'),
-                'data'    => json_encode($Site->getAttributes()),
-                'uid'     => QUI::getUserBySession()->getId()
+                'data' => json_encode($Site->getAttributes()),
+                'uid' => QUI::getUserBySession()->getId()
             ));
 
         } catch (QUI\Exception $Exception) {
@@ -69,10 +74,10 @@ class Site
         }
 
         $result = QUI::getDataBase()->fetch(array(
-            'from'  => $table,
+            'from' => $table,
             'count' => array(
                 'select' => 'id',
-                'as'     => 'count'
+                'as' => 'count'
             ),
             'where' => array(
                 'id' => $Site->getId()
@@ -91,12 +96,12 @@ class Site
         // could not delete directly
         // some mysql version dont support that, so we must delete the entries in an extra step
         $result = QUI::getDataBase()->fetch(array(
-            'from'  => $table,
+            'from' => $table,
             'where' => array(
                 'id' => $Site->getId()
             ),
             'order' => 'created ASC',
-            'limit' => '0,'.$overflow
+            'limit' => '0,' . $overflow
         ));
 
         foreach ($result as $entry) {
@@ -109,17 +114,17 @@ class Site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
      *
-     * @return Array
+     * @return array
      */
-    static function getList($Site)
+    public static function getList($Site)
     {
         $Project = $Site->getProject();
-        $table = QUI::getDBProjectTableName('archiv', $Project);
-        $result = array();
+        $table   = QUI::getDBProjectTableName('archiv', $Project);
+        $result  = array();
 
 
         $list = QUI::getDataBase()->fetch(array(
-            'from'  => $table,
+            'from' => $table,
             'order' => 'created DESC',
             'where' => array(
                 'id' => $Site->getId()
@@ -130,17 +135,16 @@ class Site
             $username = '';
 
             try {
-                $User = QUI::getUsers()->get($entry['uid']);
+                $User     = QUI::getUsers()->get($entry['uid']);
                 $username = $User->getName();
 
             } catch (QUI\Exception $Exception) {
-
             }
 
             $result[] = array(
-                'created'  => $entry['created'],
-                'data'     => $entry['data'],
-                'uid'      => $entry['uid'],
+                'created' => $entry['created'],
+                'data' => $entry['data'],
+                'uid' => $entry['uid'],
                 'username' => $username
             );
         }
@@ -152,20 +156,20 @@ class Site
      * Return the history entry from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param Integer|\DateTime                          $date
+     * @param integer|\DateTime $date
      *
-     * @return Array
+     * @return array
      * @throws QUI\Exception
      */
-    static function getHistoryEntry($Site, $date)
+    public static function getHistoryEntry($Site, $date)
     {
         $Date = new \DateTime($date);
 
         $Project = $Site->getProject();
-        $table = QUI::getDBProjectTableName('archiv', $Project);
+        $table   = QUI::getDBProjectTableName('archiv', $Project);
 
         $result = QUI::getDataBase()->fetch(array(
-            'from'  => $table,
+            'from' => $table,
             'where' => array(
                 'created' => $Date->format('Y-m-d H:i:s')
             ),
@@ -187,11 +191,11 @@ class Site
      * Return the html from a history entry from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param Integer|\DateTime                          $date - Timestamp | Date
+     * @param integer|\DateTime $date - Timestamp | Date
      *
-     * @return String
+     * @return string
      */
-    static function getHTMLFromHistoryEntry($Site, $date)
+    public static function getHTMLFromHistoryEntry($Site, $date)
     {
         $data = self::getHistoryEntry($Site, $date);
 
@@ -216,18 +220,18 @@ class Site
      * Return the diff between to history entries from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param Integer|\DateTime                          $date1 - Timestamp | Date
-     * @param Integer|\DateTime                          $date2 - Timestamp | Date
+     * @param integer|\DateTime $date1 - Timestamp | Date
+     * @param integer|\DateTime $date2 - Timestamp | Date
      *
-     * @return String
+     * @return string
      */
-    static function getDiffFromSite($Site, $date1, $date2)
+    public static function getDiffFromSite($Site, $date1, $date2)
     {
         $entry1 = self::getHTMLFromHistoryEntry($Site, $date1);
         $entry2 = self::getHTMLFromHistoryEntry($Site, $date2);
 
         if (!class_exists('HtmlDiff')) {
-            require_once OPT_DIR.'rashid2538/php-htmldiff/HtmlDiff.php';
+            require_once OPT_DIR . 'rashid2538/php-htmldiff/HtmlDiff.php';
         }
 
         $Diff = new \HtmlDiff($entry1, $entry2);
@@ -240,12 +244,12 @@ class Site
      * restore a history entry from a site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
-     * @param Integer|\DateTime                          $date - Timestamp | Date
+     * @param integer|\DateTime $date - Timestamp | Date
      */
-    static function restoreSite($Site, $date)
+    public static function restoreSite($Site, $date)
     {
         $Project = $Site->getProject();
-        $data = self::getHistoryEntry($Site, $date);
+        $data    = self::getHistoryEntry($Site, $date);
 
         $SiteEdit = new QUI\Projects\Site\Edit($Project, $Site->getId());
 
