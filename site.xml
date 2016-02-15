@@ -4,9 +4,9 @@
     <window>
         <tab name="archiv">
             <text>
-                <locale group="quiqqer/history" var="title" />
+                <locale group="quiqqer/history" var="title"/>
             </text>
-            <image>icon-time</image>
+            <image>fa fa-clock-o</image>
             <onload require="package/quiqqer/history/bin/Site"></onload>
         </tab>
     </window>
