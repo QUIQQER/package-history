@@ -7,6 +7,7 @@
 namespace QUI\History;
 
 use QUI;
+use QUI\Cache\Manager as CacheManager;
 
 /**
  * QUIQQER Site History functionality
@@ -38,28 +39,31 @@ class Site
                    $Project->getLang() . '_' .
                    $Site->getId();
 
+        try {
+            $cacheTime = CacheManager::get($cacheId);
+        } catch (QUI\Cache\Exception $Exception) {
+            $cacheTime = 0;
+        }
 
         // wait 10 seconds
         // we need not every 10 seconds a history entry
         // @todo maybe settings for minutes or hours
-        if (isset(self::$cache[$cacheId])) {
-            $diff = time() - self::$cache[$cacheId];
+        $cacheTTL = 10;
+        $diff     = time() - $cacheTime;
 
-            if ($diff <= 10) {
-                return;
-            }
+        if ($diff <= $cacheTTL) {
+            return;
         }
 
-        self::$cache[$cacheId] = time();
+        CacheManager::set($cacheId, time(), $cacheTTL);
 
         try {
             QUI::getDataBase()->insert($table, array(
-                'id' => $Site->getId(),
+                'id'      => $Site->getId(),
                 'created' => date('Y-m-d H:i:s'),
-                'data' => json_encode($Site->getAttributes()),
-                'uid' => QUI::getUserBySession()->getId()
+                'data'    => json_encode($Site->getAttributes()),
+                'uid'     => QUI::getUserBySession()->getId()
             ));
-
         } catch (QUI\Exception $Exception) {
             QUI\System\Log::addAlert($Exception->getMessage());
 
@@ -74,10 +78,10 @@ class Site
         }
 
         $result = QUI::getDataBase()->fetch(array(
-            'from' => $table,
+            'from'  => $table,
             'count' => array(
                 'select' => 'id',
-                'as' => 'count'
+                'as'     => 'count'
             ),
             'where' => array(
                 'id' => $Site->getId()
@@ -96,7 +100,7 @@ class Site
         // could not delete directly
         // some mysql version dont support that, so we must delete the entries in an extra step
         $result = QUI::getDataBase()->fetch(array(
-            'from' => $table,
+            'from'  => $table,
             'where' => array(
                 'id' => $Site->getId()
             ),
@@ -124,7 +128,7 @@ class Site
 
 
         $list = QUI::getDataBase()->fetch(array(
-            'from' => $table,
+            'from'  => $table,
             'order' => 'created DESC',
             'where' => array(
                 'id' => $Site->getId()
@@ -137,14 +141,13 @@ class Site
             try {
                 $User     = QUI::getUsers()->get($entry['uid']);
                 $username = $User->getName();
-
             } catch (QUI\Exception $Exception) {
             }
 
             $result[] = array(
-                'created' => $entry['created'],
-                'data' => $entry['data'],
-                'uid' => $entry['uid'],
+                'created'  => $entry['created'],
+                'data'     => $entry['data'],
+                'uid'      => $entry['uid'],
                 'username' => $username
             );
         }
@@ -169,7 +172,7 @@ class Site
         $table   = QUI::getDBProjectTableName('archiv', $Project);
 
         $result = QUI::getDataBase()->fetch(array(
-            'from' => $table,
+            'from'  => $table,
             'where' => array(
                 'created' => $Date->format('Y-m-d H:i:s')
             ),
