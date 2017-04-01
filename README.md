@@ -3,7 +3,7 @@ QUIQQER Verlauf (History)
 ========
 
 
-Packetname:
+Paketname:
 
     quiqqer/history
 
@@ -32,9 +32,10 @@ Mitwirken
 Support
 -------
 
-Falls Sie ein Fehler gefunden haben oder Verbesserungen wünschen,
-Dann können Sie gerne an support@pcsg.de eine E-Mail schreiben.
-
+Falls Sie Fehler gefunden, Wünsche oder Verbesserungsvorschläge haben, 
+können Sie uns gern per Mail an support@pcsg.de darüber informieren.  
+Wir werden versuchen auf Ihre Wünsche einzugehen bzw. diese an die 
+zuständigen Entwickler des Projektes weiterleiten.
 
 License
 -------
