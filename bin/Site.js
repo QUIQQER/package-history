@@ -306,6 +306,8 @@ define('package/quiqqer/history/bin/Site', [
                                 }
                             }).inject(Win.getContent());
 
+                            console.log(result);
+
                             Frame.contentWindow.document.open();
                             Frame.contentWindow.document.write(result);
                             Frame.contentWindow.document.close();

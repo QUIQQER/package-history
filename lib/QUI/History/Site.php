@@ -35,8 +35,8 @@ class Site
         $Project = $Site->getProject();
         $table   = QUI::getDBProjectTableName('archiv', $Project);
 
-        $cacheId = $Project->getName() . '_' .
-                   $Project->getLang() . '_' .
+        $cacheId = $Project->getName().'_'.
+                   $Project->getLang().'_'.
                    $Site->getId();
 
         try {
@@ -105,7 +105,7 @@ class Site
                 'id' => $Site->getId()
             ),
             'order' => 'created ASC',
-            'limit' => '0,' . $overflow
+            'limit' => '0,'.$overflow
         ));
 
         foreach ($result as $entry) {
@@ -213,8 +213,15 @@ class Site
             $Site->setAttribute($key, $value);
         }
 
-        $content = QUI::getTemplateManager()->fetchTemplate($Site);
-        $content = QUI::getRewrite()->outputFilter($content);
+//        $Rewrite->setSite($Site);
+//        $Rewrite->setPath($Site->getParents());
+//        $Rewrite->addSiteToPath($Site);
+
+        $content = QUI::getTemplateManager()->fetchSite($Site);
+        $content = QUI\Control\Manager::setCSSToHead($content);
+
+        $Output  = new QUI\Output();
+        $content = $Output->parse($content);
 
         return $content;
     }
@@ -234,7 +241,7 @@ class Site
         $entry2 = self::getHTMLFromHistoryEntry($Site, $date2);
 
         if (!class_exists('HtmlDiff')) {
-            require_once OPT_DIR . 'rashid2538/php-htmldiff/HtmlDiff.php';
+            require_once OPT_DIR.'rashid2538/php-htmldiff/HtmlDiff.php';
         }
 
         $Diff = new \HtmlDiff($entry1, $entry2);
