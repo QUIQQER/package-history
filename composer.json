@@ -2,7 +2,7 @@
   "name": "quiqqer\/history",
   "type": "quiqqer-module",
   "description": "QUIQQER history functionality for sites",
-  "version": "dev-master",
+  "version": "1.2.0",
   "license": "GPL-3.0+",
   "authors": [
     {
