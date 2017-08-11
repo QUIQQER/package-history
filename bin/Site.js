@@ -124,7 +124,7 @@ define('package/quiqqer/history/bin/Site', [
                         onClick: self.openCompare
                     }
                 }, {
-                    type: 'seperator'
+                    type: 'separator'
                 }, {
                     name     : 'preview',
                     text     : QUILocale.get(lg, 'btn.preview.text'),
@@ -240,17 +240,17 @@ define('package/quiqqer/history/bin/Site', [
                 Revert  = null;
 
             for (var i = 0, len = buttons.length; i < len; i++) {
-                if (buttons[i].getAttribute('name') == 'compare') {
+                if (buttons[i].getAttribute('name') === 'compare') {
                     Compare = buttons[i];
                     continue;
                 }
 
-                if (buttons[i].getAttribute('name') == 'preview') {
+                if (buttons[i].getAttribute('name') === 'preview') {
                     Preview = buttons[i];
                     continue;
                 }
 
-                if (buttons[i].getAttribute('name') == 'revert') {
+                if (buttons[i].getAttribute('name') === 'revert') {
                     Revert = buttons[i];
                 }
             }
@@ -263,7 +263,7 @@ define('package/quiqqer/history/bin/Site', [
             }
 
 
-            if (sels.length == 1) {
+            if (sels.length === 1) {
                 Preview.enable();
                 Revert.enable();
 
@@ -306,8 +306,6 @@ define('package/quiqqer/history/bin/Site', [
                                 }
                             }).inject(Win.getContent());
 
-                            console.log(result);
-
                             Frame.contentWindow.document.open();
                             Frame.contentWindow.document.write(result);
                             Frame.contentWindow.document.close();
@@ -342,7 +340,7 @@ define('package/quiqqer/history/bin/Site', [
                     onOpen: function (Win) {
                         Win.Loader.show();
 
-                        self.compare(Radio1.value, Radio2.value, function (result) {
+                        self.compare(Radio1.value, Radio2.value).then(function (result) {
                             var Frame = new Element('iframe', {
                                 styles: {
                                     height: '100%',
@@ -381,12 +379,12 @@ define('package/quiqqer/history/bin/Site', [
                     date: data[0].created
                 }),
                 texticon   : 'fa fa-retweet',
+                autoclose  : false,
                 events     : {
                     onSubmit: function (Win) {
                         Win.Loader.show();
-
-                        self.restore(data[0].created, function () {
-
+                        self.restore(data[0].created).then(function () {
+                            Win.close();
                         });
                     }
                 }
@@ -402,48 +400,57 @@ define('package/quiqqer/history/bin/Site', [
          *
          * @param {String} date1 - date of the first history entry
          * @param {String} date2 - date of the second history entry
-         * @param {Function} callback - callback function after finish
+         * @param {Function} [callback] - callback function after finish
+         * @return {Promise}
          */
         compare: function (date1, date2, callback) {
-            Ajax.get('package_quiqqer_history_ajax_compare', function (result) {
-                callback(result);
-            }, {
-                'package': 'quiqqer/history',
-                project  : this.$Project.encode(),
-                id       : this.$Site.getId(),
-                date1    : date1,
-                date2    : date2
-            });
+            return new Promise(function (resolve, reject) {
+                Ajax.get('package_quiqqer_history_ajax_compare', function (result) {
+                    if (typeof callback === 'function') {
+                        callback(result);
+                    }
+
+                    resolve(result);
+                }, {
+                    'package': 'quiqqer/history',
+                    project  : this.$Project.encode(),
+                    id       : this.$Site.getId(),
+                    date1    : date1,
+                    date2    : date2,
+                    onError  : reject
+                });
+            }.bind(this));
         },
 
         /**
          * restore a history entry of the site
          *
          * @param {String} date - date of the history entry
-         * @param {Function} callback - callback function after finish
+         * @param {Function} [callback] - callback function after finish
+         * @return {Promise}
          */
         restore: function (date, callback) {
             var self = this;
 
-            Ajax.get('package_quiqqer_history_ajax_restore', function (result) {
-                // refresh the site
-                require(['Projects'], function (Projects) {
-                    var Project = Projects.get(
-                        self.getAttribute('project'),
-                        self.getAttribute('lang')
-                    );
+            return new Promise(function (resolve, reject) {
+                Ajax.get('package_quiqqer_history_ajax_restore', function (result) {
+                    // refresh the site
+                    self.$Project.get(self.$Site.getId()).load(function () {
+                        self.load();
 
-                    Project.get(self.getAttribute('id')).load();
+                        if (typeof callback === 'function') {
+                            callback(result);
+                        }
+
+                        resolve(result);
+                    });
+                }, {
+                    'package': 'quiqqer/history',
+                    project  : self.$Project.encode(),
+                    id       : self.$Site.getId(),
+                    date     : date,
+                    onError  : reject
                 });
-
-                self.load();
-
-                callback(result);
-            }, {
-                'package': 'quiqqer/history',
-                project  : this.$Project.encode(),
-                id       : this.$Site.getId(),
-                date     : date
             });
         },
 
@@ -451,17 +458,25 @@ define('package/quiqqer/history/bin/Site', [
          * return a html preview of a history entry from the site
          *
          * @param {String} date - date of the history entry
-         * @param {Function} callback - callback function after finish
+         * @param {Function} [callback] - callback function after finish
+         * @return {Promise}
          */
         preview: function (date, callback) {
-            Ajax.get('package_quiqqer_history_ajax_preview', function (result) {
-                callback(result);
-            }, {
-                'package': 'quiqqer/history',
-                project  : this.$Project.encode(),
-                id       : this.$Site.getId(),
-                date     : date
-            });
+            return new Promise(function (resolve, reject) {
+                Ajax.get('package_quiqqer_history_ajax_preview', function (result) {
+                    if (typeof callback === 'function') {
+                        callback(result);
+                    }
+
+                    resolve(result);
+                }, {
+                    'package': 'quiqqer/history',
+                    project  : this.$Project.encode(),
+                    id       : this.$Site.getId(),
+                    date     : date,
+                    onError  : reject
+                });
+            }.bind(this));
         }
     });
 });
