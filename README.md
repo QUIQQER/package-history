@@ -1,3 +1,4 @@
+![QUIQQER Countries](bin/images/Readme.jpg)
 
 QUIQQER Verlauf (History)
 ========
