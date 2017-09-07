@@ -43,6 +43,3 @@ License
 
 - GPL-3.0+
 
-
-Entwickler
---------
