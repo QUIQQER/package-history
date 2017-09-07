@@ -41,6 +41,18 @@
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
         </locale>
+        <locale name="description">
+            <de><![CDATA[Verlauf]]></de>
+            <en><![CDATA[History]]></en>
+        </locale>
+        <locale name="package.title">
+            <de><![CDATA[Verlauf]]></de>
+            <en><![CDATA[History]]></en>
+        </locale>
+        <locale name="package.description">
+            <de><![CDATA[Das verlieren von Seitendaten und Inhalten gehört der Vergangenheit an. Das History Modul speichert verschiedene Versionen jeder Seite und ermöglicht es Ihnen verschiedene Zeitpunkt zurückzuspielen oder zu verleichen.]]></de>
+            <en><![CDATA[The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page]]></en>
+        </locale>
         <locale name="settings.title">
             <de><![CDATA[Verlauf-Einstellungen]]></de>
             <en><![CDATA[History settings]]></en>

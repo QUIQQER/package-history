@@ -1,9 +1,9 @@
 {
   "name": "quiqqer\/history",
   "type": "quiqqer-module",
-  "description": "QUIQQER history functionality for sites",
+  "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
   "version": "dev-master",
-  "license": "GPL-3.0+",
+  "license": "",
   "authors": [
     {
       "name": "Henning Leutz",
