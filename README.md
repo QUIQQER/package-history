@@ -1,3 +1,4 @@
+![QUIQQER Countries](bin/images/Readme.jpg)
 
 QUIQQER Verlauf (History)
 ========
@@ -42,6 +43,3 @@ License
 
 - GPL-3.0+
 
-
-Entwickler
---------
