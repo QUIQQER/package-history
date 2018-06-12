@@ -10,6 +10,13 @@
 
         <image src="URL_OPT_DIR/quiqqer/history/bin/images/Logo.jpg"/>
 
+        <preview>
+            <image src="URL_OPT_DIR/quiqqer/history/bin/images/preview/1.jpg"/>
+            <image src="URL_OPT_DIR/quiqqer/history/bin/images/preview/2.jpg"/>
+            <image src="URL_OPT_DIR/quiqqer/history/bin/images/preview/3.jpg"/>
+            <image src="URL_OPT_DIR/quiqqer/history/bin/images/preview/4.jpg"/>
+        </preview>
+
         <support>
             <email><![CDATA[support@pcsg.de]]></email>
             <forum><![CDATA[https://community.quiqqer.com]]></forum>
