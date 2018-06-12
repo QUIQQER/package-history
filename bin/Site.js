@@ -90,15 +90,19 @@ define('package/quiqqer/history/bin/Site', [
 
             this.$Grid = new Grid(Container, {
                 columnModel: [{
-                    header   : '&nbsp;',
+                    header   : QUILocale.get('quiqqer/history', 'version', {
+                        index: 'A'
+                    }),
                     dataIndex: 'select1',
                     dataType : 'node',
-                    width    : 50
+                    width    : 60
                 }, {
-                    header   : '&nbsp;',
+                    header   : QUILocale.get('quiqqer/history', 'version', {
+                        index: 'B'
+                    }),
                     dataIndex: 'select2',
                     dataType : 'node',
-                    width    : 50
+                    width    : 60
                 }, {
                     header   : QUILocale.get('quiqqer/system', 'c_date'),
                     dataIndex: 'created',
