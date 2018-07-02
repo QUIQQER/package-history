@@ -218,6 +218,10 @@ class Site
 //        $Rewrite->addSiteToPath($Site);
 
         $content = QUI::getTemplateManager()->fetchSite($Site);
+
+        $packageDir = QUI::getPackage('quiqqer/history')->getDir();
+        QUI\Control\Manager::addCSSFile("{$packageDir}/bin/SiteCompare.css");
+
         $content = QUI\Control\Manager::setCSSToHead($content);
 
         $Output  = new QUI\Output();

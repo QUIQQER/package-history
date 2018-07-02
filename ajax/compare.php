@@ -19,7 +19,13 @@ function package_quiqqer_history_ajax_compare($project, $id, $date1, $date2)
     $Project = \QUI::getProjectManager()->decode($project);
     $Site = $Project->get($id);
 
-    return $History->getDiffFromSite($Site, $date1, $date2);
+    $originalHTML = \QUI\History\Site::getHTMLFromHistoryEntry($Site, $date1);
+    $difference = $History->getDiffFromSite($Site, $date1, $date2);
+
+    return array(
+        "originalHtml" => $originalHTML,
+        "differenceHtml" => $difference
+    );
 }
 
 \QUI::$Ajax->register(
