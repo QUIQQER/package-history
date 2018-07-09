@@ -90,15 +90,19 @@ define('package/quiqqer/history/bin/Site', [
 
             this.$Grid = new Grid(Container, {
                 columnModel: [{
-                    header   : '&nbsp;',
+                    header   : QUILocale.get('quiqqer/history', 'version', {
+                        index: 'A'
+                    }),
                     dataIndex: 'select1',
                     dataType : 'node',
-                    width    : 50
+                    width    : 60
                 }, {
-                    header   : '&nbsp;',
+                    header   : QUILocale.get('quiqqer/history', 'version', {
+                        index: 'B'
+                    }),
                     dataIndex: 'select2',
                     dataType : 'node',
-                    width    : 50
+                    width    : 60
                 }, {
                     header   : QUILocale.get('quiqqer/system', 'c_date'),
                     dataIndex: 'created',
@@ -341,17 +345,32 @@ define('package/quiqqer/history/bin/Site', [
                         Win.Loader.show();
 
                         self.compare(Radio1.value, Radio2.value).then(function (result) {
-                            var Frame = new Element('iframe', {
-                                styles: {
-                                    height: '100%',
-                                    width : '100%',
-                                    border: '0px'
-                                }
-                            }).inject(Win.getContent());
+                            var FrameOriginal   = new Element('iframe', {
+                                    class : 'history-comparison',
+                                    styles: {
+                                        height: '100%',
+                                        width : '50%',
+                                        border: '0px',
+                                        float : 'left'
+                                    }
+                                }),
 
-                            Frame.contentWindow.document.open();
-                            Frame.contentWindow.document.write(result);
-                            Frame.contentWindow.document.close();
+                                FrameDifference = FrameOriginal.clone(),
+
+                                frames = [{
+                                    element: FrameOriginal,
+                                    html   : result.originalHtml
+                                }, {
+                                    element: FrameDifference,
+                                    html   : result.differenceHtml
+                                }];
+
+                            frames.forEach(function (Frame) {
+                                Frame.element.inject(Win.getContent());
+                                Frame.element.contentWindow.document.open();
+                                Frame.element.contentWindow.document.write(Frame.html);
+                                Frame.element.contentWindow.document.close();
+                            });
 
                             Win.Loader.hide();
                         });

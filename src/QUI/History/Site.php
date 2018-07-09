@@ -23,12 +23,14 @@ class Site
      * internal cache
      * @var array
      */
-    public static $cache = array();
+    public static $cache = [];
 
     /**
      * Saves an history entry
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
+     *
+     * @throws QUI\Exception
      */
     public static function onSave($Site)
     {
@@ -58,12 +60,12 @@ class Site
         CacheManager::set($cacheId, time(), $cacheTTL);
 
         try {
-            QUI::getDataBase()->insert($table, array(
+            QUI::getDataBase()->insert($table, [
                 'id'      => $Site->getId(),
                 'created' => date('Y-m-d H:i:s'),
                 'data'    => json_encode($Site->getAttributes()),
                 'uid'     => QUI::getUserBySession()->getId()
-            ));
+            ]);
         } catch (QUI\Exception $Exception) {
             QUI\System\Log::addAlert($Exception->getMessage());
 
@@ -77,16 +79,16 @@ class Site
             return;
         }
 
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'from'  => $table,
-            'count' => array(
+            'count' => [
                 'select' => 'id',
                 'as'     => 'count'
-            ),
-            'where' => array(
+            ],
+            'where' => [
                 'id' => $Site->getId()
-            )
-        ));
+            ]
+        ]);
 
         $count = (int)$result[0]['count'];
 
@@ -99,14 +101,14 @@ class Site
 
         // could not delete directly
         // some mysql version dont support that, so we must delete the entries in an extra step
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'from'  => $table,
-            'where' => array(
+            'where' => [
                 'id' => $Site->getId()
-            ),
+            ],
             'order' => 'created ASC',
             'limit' => '0,'.$overflow
-        ));
+        ]);
 
         foreach ($result as $entry) {
             QUI::getDataBase()->delete($table, $entry);
@@ -119,21 +121,23 @@ class Site
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
      *
      * @return array
+     *
+     * @throws QUI\Exception
      */
     public static function getList($Site)
     {
         $Project = $Site->getProject();
         $table   = QUI::getDBProjectTableName('archiv', $Project);
-        $result  = array();
+        $result  = [];
 
 
-        $list = QUI::getDataBase()->fetch(array(
+        $list = QUI::getDataBase()->fetch([
             'from'  => $table,
             'order' => 'created DESC',
-            'where' => array(
+            'where' => [
                 'id' => $Site->getId()
-            )
-        ));
+            ]
+        ]);
 
         foreach ($list as $entry) {
             $username = '';
@@ -144,12 +148,12 @@ class Site
             } catch (QUI\Exception $Exception) {
             }
 
-            $result[] = array(
+            $result[] = [
                 'created'  => $entry['created'],
                 'data'     => $entry['data'],
                 'uid'      => $entry['uid'],
                 'username' => $username
-            );
+            ];
         }
 
         return $result;
@@ -171,13 +175,13 @@ class Site
         $Project = $Site->getProject();
         $table   = QUI::getDBProjectTableName('archiv', $Project);
 
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'from'  => $table,
-            'where' => array(
+            'where' => [
                 'created' => $Date->format('Y-m-d H:i:s')
-            ),
+            ],
             'limit' => 1
-        ));
+        ]);
 
         if (!isset($result[0])) {
             throw new QUI\Exception(
@@ -187,7 +191,7 @@ class Site
 
         $data = json_decode($result[0]['data'], true);
 
-        return is_array($data) ? $data : array();
+        return is_array($data) ? $data : [];
     }
 
     /**
@@ -197,6 +201,8 @@ class Site
      * @param integer|\DateTime $date - Timestamp | Date
      *
      * @return string
+     *
+     * @throws QUI\Exception
      */
     public static function getHTMLFromHistoryEntry($Site, $date)
     {
@@ -218,6 +224,10 @@ class Site
 //        $Rewrite->addSiteToPath($Site);
 
         $content = QUI::getTemplateManager()->fetchSite($Site);
+
+        $packageDir = QUI::getPackage('quiqqer/history')->getDir();
+        QUI\Control\Manager::addCSSFile("{$packageDir}/bin/SiteCompare.css");
+
         $content = QUI\Control\Manager::setCSSToHead($content);
 
         $Output  = new QUI\Output();
@@ -234,6 +244,8 @@ class Site
      * @param integer|\DateTime $date2 - Timestamp | Date
      *
      * @return string
+     *
+     * @throws QUI\Exception
      */
     public static function getDiffFromSite($Site, $date1, $date2)
     {
@@ -255,6 +267,8 @@ class Site
      *
      * @param \QUI\Projects\Site|\QUI\Projects\Site\Edit $Site
      * @param integer|\DateTime $date - Timestamp | Date
+     *
+     * @throws QUI\Exception
      */
     public static function restoreSite($Site, $date)
     {
