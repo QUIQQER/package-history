@@ -2,7 +2,7 @@
   "name": "quiqqer\/history",
   "type": "quiqqer-module",
   "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
-  "version": "dev-dev",
+  "version": "dev-master",
   "license": [
     "CC BY-NC-SA 4.0",
     "PCSG QL-1.0"
