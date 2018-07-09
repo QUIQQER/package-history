@@ -16,10 +16,14 @@ function package_quiqqer_history_ajax_preview($project, $id, $date)
     $Project = QUI::getProjectManager()->decode($project);
     $Site    = $Project->get($id);
 
+    if (!isset($_REQUEST['_url'])) {
+        $_REQUEST['_url'] = $Site->getUrlRewritten();
+    }
+
     return $History->getHTMLFromHistoryEntry($Site, $date);
 }
 
 QUI::$Ajax->register(
     'package_quiqqer_history_ajax_preview',
-    array('project', 'id', 'date')
+    ['project', 'id', 'date']
 );
