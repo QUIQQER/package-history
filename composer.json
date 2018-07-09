@@ -20,7 +20,7 @@
   },
   "require": {
     "quiqqer\/quiqqer": "*@dev",
-    "rashid2538\/php-htmldiff": "dev-master"
+    "pcsg\/php-htmldiff": "dev-master"
   },
   "autoload": {
     "psr-4": {
