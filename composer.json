@@ -3,7 +3,10 @@
   "type": "quiqqer-module",
   "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
   "version": "dev-dev",
-  "license": ["CC BY-NC-SA 4.0", "PCSG QL-1.0"],
+  "license": [
+    "CC BY-NC-SA 4.0",
+    "PCSG QL-1.0"
+  ],
   "authors": [
     {
       "name": "Henning Leutz",
@@ -20,8 +23,8 @@
     "rashid2538\/php-htmldiff": "dev-master"
   },
   "autoload": {
-    "psr-0": {
-      "QUI": "lib\/"
+    "psr-4": {
+      "QUI\\History\\": "src/QUI/History"
     }
   }
 }
