@@ -23,13 +23,13 @@
             <de><![CDATA[Version zurückspielen]]></de>
             <en><![CDATA[Revert version]]></en>
         </locale>
-        <locale name="version">
-            <de><![CDATA[Version [index]]]></de>
-            <en><![CDATA[Version [index]]]></en>
+        <locale name="compare">
+            <de><![CDATA[Zu vergleichen]]></de>
+            <en><![CDATA[To compare]]></en>
         </locale>
         <locale name="btn.compare.text">
-            <de><![CDATA[Version A und B vergleichen]]></de>
-            <en><![CDATA[Compare version A and B]]></en>
+            <de><![CDATA[Auswahlen vergleichen]]></de>
+            <en><![CDATA[Compare Selections]]></en>
         </locale>
     </groups>
     <groups name="quiqqer/history" datatype="js,php">

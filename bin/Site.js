@@ -52,6 +52,8 @@ define('package/quiqqer/history/bin/Site', [
             Site: false
         },
 
+        selectedCheckboxes: [],
+
         initialize: function (options) {
             this.parent(options);
 
@@ -90,19 +92,10 @@ define('package/quiqqer/history/bin/Site', [
 
             this.$Grid = new Grid(Container, {
                 columnModel: [{
-                    header   : QUILocale.get('quiqqer/history', 'version', {
-                        index: 'A'
-                    }),
-                    dataIndex: 'select1',
+                    header   : QUILocale.get('quiqqer/history', 'compare'),
+                    dataIndex: 'versions',
                     dataType : 'node',
-                    width    : 60
-                }, {
-                    header   : QUILocale.get('quiqqer/history', 'version', {
-                        index: 'B'
-                    }),
-                    dataIndex: 'select2',
-                    dataType : 'node',
-                    width    : 60
+                    width    : 80
                 }, {
                     header   : QUILocale.get('quiqqer/system', 'c_date'),
                     dataIndex: 'created',
@@ -178,32 +171,49 @@ define('package/quiqqer/history/bin/Site', [
             this.Loader.show();
 
             Ajax.get('package_quiqqer_history_ajax_list', function (result) {
-                var id = self.getId();
+                var versionCheckboxChange = function (event) {
+                    var index      = event.target.getAttribute('data-index'),
+                        checkboxes = self.getCheckboxes(),
+                        i          = 0;
 
-                var inputClick = function () {
+                    // Checkbox was unchecked
+                    if (!event.target.checked) {
+                        // Remove index from selected checkboxes
+                        self.selectedCheckboxes.splice(self.selectedCheckboxes.indexOf(index), 1);
+
+                        // Enable all checkboxes
+                        for (i = 0; i < checkboxes.length; i++) {
+                            checkboxes[i].disabled = false;
+                        }
+                    }
+
+                    // Checkbox was checked
+                    if (event.target.checked) {
+                        // Add index to selected checkboxes
+                        self.selectedCheckboxes.push(index);
+                    }
+
+                    if (self.selectedCheckboxes.length >= 2) {
+                        // Disable all unselected checkboxes
+                        for (i = 0; i < checkboxes.length; i++) {
+                            if (!checkboxes[i].checked) {
+                                checkboxes[i].disabled = true;
+                            }
+                        }
+                    }
+
                     self.$refreshGridButtons();
                 };
 
                 for (var i = 0, len = result.length; i < len; i++) {
-                    result[i].select1 = new Element('input', {
-                        type  : 'radio',
-                        name  : id + '_select1',
-                        value : result[i].created,
-                        events: {
-                            click: inputClick
-                        }
-                    });
-
-                    result[i].select2 = new Element('input', {
-                        type  : 'radio',
-                        name  : id + '_select2',
-                        value : result[i].created,
-                        events: {
-                            click: inputClick
+                    result[i].versions = new Element('input', {
+                        type        : 'checkbox',
+                        'data-index': i,
+                        events      : {
+                            change: versionCheckboxChange
                         }
                     });
                 }
-
 
                 self.$Grid.setData({
                     data: result
@@ -219,6 +229,10 @@ define('package/quiqqer/history/bin/Site', [
             });
         },
 
+        getCheckboxes: function() {
+            return this.$Grid.getElm().querySelectorAll('div[data-index="versions"] > input[type="checkbox"]');
+        },
+
         /**
          * event : on inject
          */
@@ -231,12 +245,7 @@ define('package/quiqqer/history/bin/Site', [
          */
         $refreshGridButtons: function () {
             var buttons = this.$Grid.getButtons(),
-                sels    = this.$Grid.getSelectedIndices(),
-                id1     = this.getId() + '_select1',
-                id2     = this.getId() + '_select2';
-
-            var Radio1 = this.$Elm.getElement('input[name="' + id1 + '"]:checked'),
-                Radio2 = this.$Elm.getElement('input[name="' + id2 + '"]:checked');
+                sels    = this.$Grid.getSelectedIndices();
 
             // buttons
             var Compare = null,
@@ -260,12 +269,11 @@ define('package/quiqqer/history/bin/Site', [
             }
 
 
-            if (Radio1 && Radio2) {
+            if (this.selectedCheckboxes.length === 2) {
                 Compare.enable();
             } else {
                 Compare.disable();
             }
-
 
             if (sels.length === 1) {
                 Preview.enable();
@@ -327,15 +335,8 @@ define('package/quiqqer/history/bin/Site', [
         openCompare: function () {
             var self = this,
                 size = document.body.getSize(),
-                id1  = this.getId() + '_select1',
-                id2  = this.getId() + '_select2';
-
-            var Radio1 = this.$Elm.getElement('input[name="' + id1 + '"]:checked'),
-                Radio2 = this.$Elm.getElement('input[name="' + id2 + '"]:checked');
-
-            if (!Radio1 || !Radio2) {
-                return;
-            }
+                date1 = this.$Grid.getDataByRow(this.selectedCheckboxes[0]).created,
+                date2 = this.$Grid.getDataByRow(this.selectedCheckboxes[1]).created;
 
             new QUIWindow({
                 maxWidth : size.x - 60,
@@ -344,7 +345,7 @@ define('package/quiqqer/history/bin/Site', [
                     onOpen: function (Win) {
                         Win.Loader.show();
 
-                        self.compare(Radio1.value, Radio2.value).then(function (result) {
+                        self.compare(date1, date2).then(function (result) {
                             var FrameOriginal   = new Element('iframe', {
                                     class : 'history-comparison',
                                     styles: {
