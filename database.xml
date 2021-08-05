@@ -3,8 +3,8 @@
 
     <projects>
         <table name="archiv" no-auto-update="1" no-site-reference="1">
-            <field type="BIGINT(20)">id</field>
-            <field type="DATETIME NULL DEFAULT NULL">created</field>
+            <field type="BIGINT(20) NOT NULL">id</field>
+            <field type="DATETIME NOT NULL">created</field>
             <field type="TEXT NULL">data</field>
             <field type="INT(11)">uid</field>
 
