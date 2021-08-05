@@ -60,12 +60,25 @@ class Site
         CacheManager::set($cacheId, time(), $cacheTTL);
 
         try {
-            QUI::getDataBase()->insert($table, [
-                'id'      => $Site->getId(),
-                'created' => date('Y-m-d H:i:s'),
-                'data'    => json_encode($Site->getAttributes()),
-                'uid'     => QUI::getUserBySession()->getId()
+            $created = date('Y-m-d H:i:s');
+
+            $countResult = QUI::getDataBase()->fetch([
+                'count' => 1,
+                'from'  => $table,
+                'where' => [
+                    'id'      => $Site->getId(),
+                    'created' => $created
+                ]
             ]);
+
+            if (empty(\current(\current($countResult)))) {
+                QUI::getDataBase()->insert($table, [
+                    'id'      => $Site->getId(),
+                    'created' => $created,
+                    'data'    => json_encode($Site->getAttributes()),
+                    'uid'     => QUI::getUserBySession()->getId()
+                ]);
+            }
         } catch (QUI\Exception $Exception) {
             QUI\System\Log::addAlert($Exception->getMessage());
 
