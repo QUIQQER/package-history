@@ -12,6 +12,12 @@
             "email": "leutz@pcsg.de",
             "homepage": "http:\/\/www.pcsg.de",
             "role": "Developer"
+        },
+        {
+            "name": "Jan Wennrich",
+            "email": "wennrich@pcsg.de",
+            "homepage": "https://www.pcsg.de",
+            "role": "Developer"
         }
     ],
     "support": {
@@ -19,7 +25,7 @@
     },
     "require": {
         "quiqqer\/quiqqer": "*@dev",
-        "pcsg\/php-htmldiff": "dev-master"
+        "pcsg\/php-htmldiff": "2.*"
     },
     "autoload": {
         "psr-4": {
