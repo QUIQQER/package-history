@@ -19,7 +19,7 @@
     },
     "require": {
         "quiqqer\/quiqqer": "*@dev",
-        "pcsg\/php-htmldiff": "dev-master"
+        "caxy/php-htmldiff": "v0.1.*"
     },
     "autoload": {
         "psr-4": {
