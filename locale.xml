@@ -41,6 +41,14 @@
             <de><![CDATA[Wie viele Versionen dürfen pro Seite maximal erstellt werden?]]></de>
             <en><![CDATA[What is the maximum number of versions that can be created per site?]]></en>
         </locale>
+        <locale name="settings.limit.brick.text">
+            <de><![CDATA[Verlaufseinträge pro Baustein]]></de>
+            <en><![CDATA[History entries per brick]]></en>
+        </locale>
+        <locale name="settings.limit.brick.description">
+            <de><![CDATA[Wie viele Versionen dürfen pro Baustein maximal erstellt werden?]]></de>
+            <en><![CDATA[What is the maximum number of versions that can be created per brick?]]></en>
+        </locale>
         <locale name="title">
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
