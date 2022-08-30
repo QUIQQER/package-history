@@ -4,6 +4,7 @@ namespace QUI\History;
 
 use DateTime;
 
+use PCSG\PhpHtmlDiff\HtmlDiff;
 use QUI;
 use QUI\Cache\Manager as CacheManager;
 use QUI\Exception;
@@ -219,5 +220,28 @@ class Brick
             $Brick->getAttribute('id'),
             static::getHistoryEntryData($Brick, $Date)
         );
+    }
+
+    /**
+     * Generates HTML that shows the difference between two versions/dates of a brick.
+     *
+     * @param QUI\Bricks\Brick $Brick
+     * @param DateTime $Date1
+     * @param DateTime $Date2
+     *
+     * @return string
+     *
+     * @throws Exception
+     * @throws Exception\HistoryEntryNotFoundException
+     */
+    public static function generateDifference(QUI\Bricks\Brick $Brick, DateTime $Date1, DateTime $Date2): string
+    {
+        $html1 = static::getHistoryEntryData($Brick, $Date1)['content'];
+        $html2 = static::getHistoryEntryData($Brick, $Date2)['content'];
+
+        $Diff = new HtmlDiff($html1, $html2);
+        $Diff->build();
+
+        return $Diff->getDifference();
     }
 }

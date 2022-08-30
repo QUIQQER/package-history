@@ -331,8 +331,6 @@ define('package/quiqqer/history/bin/Brick', [
          * open the comparison window
          */
         openCompare: function () {
-            return;
-
             var self = this,
                 size = document.body.getSize(),
                 date1 = this.$Grid.getDataByRow(this.selectedCheckboxes[0]).created,
@@ -424,10 +422,8 @@ define('package/quiqqer/history/bin/Brick', [
          * @return {Promise}
          */
         compare: function (date1, date2, callback) {
-            return;
-
             return new Promise(function (resolve, reject) {
-                Ajax.get('package_quiqqer_history_ajax_compare', function (result) {
+                Ajax.get('package_quiqqer_history_ajax_bricks_compare', function (result) {
                     if (typeof callback === 'function') {
                         callback(result);
                     }
@@ -435,8 +431,7 @@ define('package/quiqqer/history/bin/Brick', [
                     resolve(result);
                 }, {
                     'package': 'quiqqer/history',
-                    project  : this.$Project.encode(),
-                    id       : this.$Site.getId(),
+                    brickId  : this.getBrickId(),
                     date1    : date1,
                     date2    : date2,
                     onError  : reject
