@@ -201,4 +201,23 @@ class Brick
 
         return is_array($data) ? $data : [];
     }
+
+    /**
+     * Restores the given brick to the state of the given date.
+     *
+     * @param QUI\Bricks\Brick $Brick
+     * @param DateTime $Date
+     *
+     * @return void
+     *
+     * @throws Exception
+     * @throws QUI\History\Exception\HistoryEntryNotFoundException
+     */
+    public static function restore(QUI\Bricks\Brick $Brick, DateTime $Date)
+    {
+        QUI\Bricks\Manager::init()->saveBrick(
+            $Brick->getAttribute('id'),
+            static::getHistoryEntryData($Brick, $Date)
+        );
+    }
 }
