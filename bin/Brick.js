@@ -368,6 +368,12 @@ define('package/quiqqer/history/bin/Brick', [
                                 Frame.element.inject(Win.getContent());
                                 Frame.element.contentWindow.document.open();
                                 Frame.element.contentWindow.document.write(Frame.html);
+                                Frame.element.contentWindow.document.write(`
+                                    <style>
+                                        ins { color: green; }
+                                        del { color: red; }
+                                    </style>
+                                `);
                                 Frame.element.contentWindow.document.close();
                             });
 
