@@ -292,8 +292,6 @@ define('package/quiqqer/history/bin/Brick', [
          * open a preview window
          */
         openPreview: function () {
-            return;
-
             var self = this,
                 size = document.body.getSize(),
                 data = this.$Grid.getSelectedData();
@@ -490,10 +488,8 @@ define('package/quiqqer/history/bin/Brick', [
          * @return {Promise}
          */
         preview: function (date, callback) {
-            return;
-
             return new Promise(function (resolve, reject) {
-                Ajax.get('package_quiqqer_history_ajax_preview', function (result) {
+                Ajax.get('package_quiqqer_history_ajax_bricks_preview', function (result) {
                     if (typeof callback === 'function') {
                         callback(result);
                     }
@@ -501,8 +497,7 @@ define('package/quiqqer/history/bin/Brick', [
                     resolve(result);
                 }, {
                     'package': 'quiqqer/history',
-                    project  : this.$Project.encode(),
-                    id       : this.$Site.getId(),
+                    brickId  : this.getBrickId(),
                     date     : date,
                     onError  : reject
                 });
