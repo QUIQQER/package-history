@@ -1,0 +1,19 @@
+<quiqqer>
+    <window name="package/quiqqer/bricks/bin/BrickEdit">
+        <categories>
+            <category name="history">
+                <text>
+                    <locale group="quiqqer/history" var="title"/>
+                </text>
+
+                <image>fa fa-clock-o</image>
+
+                <settings name="history">
+                    <input type="hidden" data-qui="package/quiqqer/history/bin/Brick">
+                        <text>-</text>
+                    </input>
+                </settings>
+            </category>
+        </categories>
+    </window>
+</quiqqer>
