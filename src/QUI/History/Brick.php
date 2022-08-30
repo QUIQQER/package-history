@@ -213,7 +213,7 @@ class Brick
      * @throws Exception
      * @throws QUI\History\Exception\HistoryEntryNotFoundException
      */
-    public static function restore(QUI\Bricks\Brick $Brick, DateTime $Date)
+    public static function restore(QUI\Bricks\Brick $Brick, DateTime $Date): void
     {
         QUI\Bricks\Manager::init()->saveBrick(
             $Brick->getAttribute('id'),
