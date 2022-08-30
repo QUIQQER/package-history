@@ -384,8 +384,6 @@ define('package/quiqqer/history/bin/Brick', [
          * open the restore window
          */
         openRestore: function () {
-            return;
-
             var self = this,
                 data = this.$Grid.getSelectedData();
 
@@ -454,26 +452,20 @@ define('package/quiqqer/history/bin/Brick', [
          * @return {Promise}
          */
         restore: function (date, callback) {
-            return;
-
             var self = this;
 
             return new Promise(function (resolve, reject) {
-                Ajax.get('package_quiqqer_history_ajax_restore', function (result) {
-                    // refresh the site
-                    self.$Project.get(self.$Site.getId()).load(function () {
-                        self.load();
+                Ajax.get('package_quiqqer_history_ajax_bricks_restore', function (result) {
+                        // TODO: refresh the brick panel to load the new/restored settings
 
                         if (typeof callback === 'function') {
                             callback(result);
                         }
 
                         resolve(result);
-                    });
                 }, {
                     'package': 'quiqqer/history',
-                    project  : self.$Project.encode(),
-                    id       : self.$Site.getId(),
+                    brickId  : self.getBrickId(),
                     date     : date,
                     onError  : reject
                 });
