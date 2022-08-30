@@ -20,8 +20,8 @@
             <en><![CDATA[Restore archive entry again?]]></en>
         </locale>
         <locale name="btn.revert.text">
-            <de><![CDATA[Version zurückspielen]]></de>
-            <en><![CDATA[Revert version]]></en>
+            <de><![CDATA[Version wiederherstellen]]></de>
+            <en><![CDATA[Restore version]]></en>
         </locale>
         <locale name="compare">
             <de><![CDATA[Zu vergleichen]]></de>
