@@ -8,6 +8,8 @@ use QUI;
 use QUI\Cache\Manager as CacheManager;
 use QUI\Exception;
 
+use function is_array;
+use function json_decode;
 use function json_encode;
 use function time;
 
@@ -168,15 +170,35 @@ class Brick
      * Throws an exception if no entry exists.
      *
      * @param QUI\Bricks\Brick $Brick
-     * @param \DateTime $date
+     * @param \DateTime $Date
      *
      * @return array
      *
      * @throws QUI\History\Exception\HistoryEntryNotFoundException
+     * @throws Exception
      */
-    public static function getHistoryEntry(QUI\Bricks\Brick $Brick, \DateTime $date): array
+    public static function getHistoryEntryData(QUI\Bricks\Brick $Brick, \DateTime $Date): array
     {
-        // TODO: implement method body
-        throw new QUI\History\Exception\HistoryEntryNotFoundException();
+        $table = QUI::getDBProjectTableName(
+            static::PROJECT_TABLE_NAME,
+            static::getProjectForBrick($Brick)
+        );
+
+        $result = QUI::getDataBase()->fetch([
+            'select' => 'data',
+            'from' => $table,
+            'where' => [
+                'created' => $Date->format('Y-m-d H:i:s')
+            ],
+            'limit' => 1
+        ]);
+
+        if (!isset($result[0])) {
+            throw new QUI\History\Exception\HistoryEntryNotFoundException();
+        }
+
+        $data = json_decode($result[0]['data'], true);
+
+        return is_array($data) ? $data : [];
     }
 }
