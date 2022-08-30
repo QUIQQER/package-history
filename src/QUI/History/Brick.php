@@ -70,10 +70,7 @@ class Brick
     {
         $brickId = $Brick->getAttribute('id');
 
-        $project  = $Brick->getAttribute('project');
-        $language = $Brick->getAttribute('lang');
-
-        $Project = QUI\Projects\Manager::getProject($project, $language);
+        $Project = static::getProjectForBrick($Brick);
 
         $table = QUI::getDBProjectTableName(static::PROJECT_TABLE_NAME, $Project);
 
@@ -146,6 +143,23 @@ class Brick
         }
 
         return true;
+    }
+
+    /**
+     * Returns the project the given brick belongs to.
+     *
+     * @param QUI\Bricks\Brick $Brick
+     *
+     * @return QUI\Projects\Project
+     *
+     * @throws Exception
+     */
+    public static function getProjectForBrick(QUI\Bricks\Brick $Brick): QUI\Projects\Project
+    {
+        $project  = $Brick->getAttribute('project');
+        $language = $Brick->getAttribute('lang');
+
+        return QUI\Projects\Manager::getProject($project, $language);
     }
 
     /**
