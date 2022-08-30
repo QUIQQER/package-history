@@ -44,7 +44,8 @@ define('package/quiqqer/history/bin/Brick', [
             '$onImport',
             'openPreview',
             'openCompare',
-            'openRestore'
+            'openRestore',
+            'getBrickId'
         ],
 
         options: {
@@ -225,8 +226,12 @@ define('package/quiqqer/history/bin/Brick', [
 
             }, {
                 'package': 'quiqqer/history',
-                brickId: this.$BrickPanel.getAttribute('id')
+                brickId: this.getBrickId()
             });
+        },
+
+        getBrickId: function () {
+            return this.$BrickPanel.getAttribute('id');
         },
 
         getCheckboxes: function() {
