@@ -23,7 +23,7 @@ class Brick
     /**
      * The name of the project's table used to store the bricks history.
      */
-    protected const PROJECT_TABLE_NAME = 'history_bricks';
+    public const PROJECT_TABLE_NAME = 'history_bricks';
 
     /**
      * Stores a brick in the history.
