@@ -1,18 +1,21 @@
 <?php
 
+use QUI\Bricks\Manager as BrickManager;
 use QUI\History\Brick as BrickHistory;
 
 QUI::$Ajax->registerFunction(
     'package_quiqqer_history_ajax_bricks_compare',
     function ($brickId, $date1, $date2) {
-        $Brick = \QUI\Bricks\Manager::init()->getBrickById($brickId);
+        $Brick = BrickManager::init()->getBrickById($brickId);
 
-        $Date1 = new DateTime($date1);
-        $Date2 = new DateTime($date2);
+        $dates = [new DateTime($date1), new DateTime($date2)];
+
+        $DateOldest = min($dates);
+        $DateNewest = max($dates);
 
         return [
-            "originalHtml"   => BrickHistory::getHistoryEntryData($Brick, $Date1)['content'],
-            "differenceHtml" => BrickHistory::generateDifference($Brick, $Date1, $Date2)
+            "originalHtml"   => BrickHistory::getHistoryEntryData($Brick, $DateOldest)['content'],
+            "differenceHtml" => BrickHistory::generateDifference($Brick, $DateOldest, $DateNewest)
         ];
     },
     ['brickId', 'date1', 'date2'],
