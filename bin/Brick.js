@@ -457,7 +457,7 @@ define('package/quiqqer/history/bin/Brick', [
 
             return new Promise(function (resolve, reject) {
                 Ajax.get('package_quiqqer_history_ajax_bricks_restore', function (result) {
-                        // TODO: refresh the brick panel to load the new/restored settings
+                        self.$BrickPanel.refreshData();
 
                         if (typeof callback === 'function') {
                             callback(result);
