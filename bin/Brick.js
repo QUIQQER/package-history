@@ -70,7 +70,26 @@ define('package/quiqqer/history/bin/Brick', [
         $onImport: function () {
             let SettingsContainer = this.getElm().getParent('div.quiqqer-bricks-container');
 
-            this.$BrickPanel = QUI.Controls.getById(SettingsContainer.getParent('.qui-panel').getAttribute('data-quiid'));
+            if (!SettingsContainer) {
+                console.error('Aborting brick history control import: Could not find bricks settings container');
+                return;
+            }
+
+            let ParentPanel = SettingsContainer.getParent('.qui-panel');
+
+            if (!ParentPanel) {
+                console.error('Aborting brick history control import: Could not find parent panel');
+                return;
+            }
+
+            let BrickPanel = QUI.Controls.getById(ParentPanel.getAttribute('data-quiid'));
+
+            if (!BrickPanel) {
+                console.error('Aborting brick history control import: Could not find brick panel');
+                return;
+            }
+
+            this.$BrickPanel = BrickPanel;
 
             SettingsContainer.style.height = '100%';
 
