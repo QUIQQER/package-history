@@ -12,6 +12,10 @@
                         <type><![CDATA[bool]]></type>
                         <defaultvalue>20</defaultvalue>
                     </conf>
+                    <conf name="limitPerBrick">
+                        <type><![CDATA[integer]]></type>
+                        <defaultvalue>20</defaultvalue>
+                    </conf>
                 </section>
             </config>
 
@@ -34,6 +38,14 @@
                                 </text>
                                 <description>
                                     <locale group="quiqqer/history" var="settings.limit.description" />
+                                </description>
+                            </input>
+                            <input conf="history.limits.limitPerBrick" type="text">
+                                <text>
+                                    <locale group="quiqqer/history" var="settings.limit.brick.text" />
+                                </text>
+                                <description>
+                                    <locale group="quiqqer/history" var="settings.limit.brick.description" />
                                 </description>
                             </input>
                         </settings>
