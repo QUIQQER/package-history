@@ -106,7 +106,7 @@ class Site
 
         $count = (int)$result[0]['count'];
 
-        if ($count < $limit) {
+        if ($count <= $limit) {
             return;
         }
 

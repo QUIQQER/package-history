@@ -12,9 +12,9 @@ Package Name:
 Features
 --------
 
-- Compare different versions of a page
-- Restore an old version of a page
-- Stores older versions of a page
+- Stores older versions of pages & bricks
+- Compare different versions of pages & bricks
+- Restore old versions of pages & bricks
 
 
 Installation
