@@ -244,4 +244,49 @@ class Brick
 
         return $Diff->getDifference();
     }
+
+    /**
+     * Returns an array of all history entries for the given brick.
+     *
+     * @param \QUI\Bricks\Brick $Brick
+     *
+     * @return array
+     *
+     * @throws \QUI\Database\Exception
+     * @throws \QUI\Exception
+     */
+    public static function getHistoryEntries(QUI\Bricks\Brick $Brick): array
+    {
+        $table = QUI::getDBProjectTableName(
+            static::PROJECT_TABLE_NAME,
+            static::getProjectForBrick($Brick)
+        );
+
+        $historyEntries = QUI::getDataBase()->fetch([
+            'from' => $table,
+            'order' => 'created DESC',
+            'where' => [
+                'id' => $Brick->getAttribute('id')
+            ]
+        ]);
+
+        $result = [];
+
+        foreach ($historyEntries as $historyEntry) {
+            try {
+                $username = QUI::getUsers()->get($historyEntry['uid'])->getName();
+            } catch (QUI\Exception $Exception) {
+                $username = '?';
+            }
+
+            $result[] = [
+                'created' => $historyEntry['created'],
+                'data' => $historyEntry['data'],
+                'uid' => $historyEntry['uid'],
+                'username' => $username
+            ];
+        }
+
+        return $result;
+    }
 }
