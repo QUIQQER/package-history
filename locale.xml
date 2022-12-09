@@ -24,8 +24,8 @@
             <en><![CDATA[Restore version]]></en>
         </locale>
         <locale name="btn.compare.text">
-            <de><![CDATA[Auswahlen vergleichen]]></de>
-            <en><![CDATA[Compare Selections]]></en>
+            <de><![CDATA[Auswahl vergleichen]]></de>
+            <en><![CDATA[Compare Selection]]></en>
         </locale>
     </groups>
     <groups name="quiqqer/history" datatype="js,php">
