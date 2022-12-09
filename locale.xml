@@ -23,10 +23,6 @@
             <de><![CDATA[Version wiederherstellen]]></de>
             <en><![CDATA[Restore version]]></en>
         </locale>
-        <locale name="compare">
-            <de><![CDATA[Zu vergleichen]]></de>
-            <en><![CDATA[To compare]]></en>
-        </locale>
         <locale name="btn.compare.text">
             <de><![CDATA[Auswahlen vergleichen]]></de>
             <en><![CDATA[Compare Selections]]></en>
