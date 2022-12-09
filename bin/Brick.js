@@ -108,11 +108,12 @@ define('package/quiqqer/history/bin/Brick', [
             }).inject(this.$Elm);
 
             this.$Grid = new Grid(Container, {
+                multipleSelection: true,
+                selectable: false,
                 columnModel: [{
-                    header   : QUILocale.get('quiqqer/history', 'compare'),
                     dataIndex: 'versions',
                     dataType : 'node',
-                    width    : 80
+                    width    : 30
                 }, {
                     header   : QUILocale.get('quiqqer/system', 'c_date'),
                     dataIndex: 'created',
@@ -202,6 +203,8 @@ define('package/quiqqer/history/bin/Brick', [
                         // Remove index from selected checkboxes
                         self.selectedCheckboxes.splice(self.selectedCheckboxes.indexOf(index), 1);
 
+                        self.$Grid.unSelectRow(self.$Grid.getRowElement(index));
+
                         // Enable all checkboxes
                         for (i = 0; i < checkboxes.length; i++) {
                             checkboxes[i].disabled = false;
@@ -212,6 +215,9 @@ define('package/quiqqer/history/bin/Brick', [
                     if (event.target.checked) {
                         // Add index to selected checkboxes
                         self.selectedCheckboxes.push(index);
+
+                        // Second parameter has to be formed like this in order to select multiple rows
+                        self.$Grid.selectRow(self.$Grid.getRowElement(index), {shift: 1});
                     }
 
                     if (self.selectedCheckboxes.length >= 2) {

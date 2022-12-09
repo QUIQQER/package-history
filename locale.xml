@@ -23,13 +23,9 @@
             <de><![CDATA[Version wiederherstellen]]></de>
             <en><![CDATA[Restore version]]></en>
         </locale>
-        <locale name="compare">
-            <de><![CDATA[Zu vergleichen]]></de>
-            <en><![CDATA[To compare]]></en>
-        </locale>
         <locale name="btn.compare.text">
-            <de><![CDATA[Auswahlen vergleichen]]></de>
-            <en><![CDATA[Compare Selections]]></en>
+            <de><![CDATA[Auswahl vergleichen]]></de>
+            <en><![CDATA[Compare Selection]]></en>
         </locale>
     </groups>
     <groups name="quiqqer/history" datatype="js,php">
@@ -74,6 +70,26 @@
         <locale name="exception.history.entry.not.exist">
             <de><![CDATA[Der History-Eintrag existiert nicht.]]></de>
             <en><![CDATA[History entry not exist.]]></en>
+        </locale>
+        <locale name="console.initialize.description">
+            <de><![CDATA[Erstellt den ersten Eintrag im Verlauf aller unterstützten Elemente.]]></de>
+            <en><![CDATA[Creates the first entry in the history of all supported elements.]]></en>
+        </locale>
+        <locale name="console.initialize.process.project">
+            <de><![CDATA[Verarbeite Project '[projectName]' in Sprache '[projectLanguage]']]></de>
+            <en><![CDATA[Processing project '[projectName]' in language '[projectLanguage]']]></en>
+        </locale>
+        <locale name="console.initialize.process.site.error">
+            <de><![CDATA[Seite mit ID '[siteId]' konnte nicht verarbeitet werden: '[reason]']]></de>
+            <en><![CDATA[Could not process site with ID '[siteId]': '[reason]']]></en>
+        </locale>
+        <locale name="console.initialize.process.brick.error.getBricks">
+            <de><![CDATA[Konnte Bricks für dieses Projekt nicht laden: '[reason]']]></de>
+            <en><![CDATA[Could not load bricks for this project: '[reason]']]></en>
+        </locale>
+        <locale name="console.initialize.process.brick.error.saveBrick">
+            <de><![CDATA[Konnte Brick mit ID '[brickId]' nicht verarbeiten: '[reason]']]></de>
+            <en><![CDATA[Could not process brick with ID '[brickId]': '[reason]']]></en>
         </locale>
     </groups>
 </locales>
