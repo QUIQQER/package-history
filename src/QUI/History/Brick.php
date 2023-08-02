@@ -3,7 +3,6 @@
 namespace QUI\History;
 
 use DateTime;
-
 use PCSG\PhpHtmlDiff\HtmlDiff;
 use QUI;
 use QUI\Cache\Manager as CacheManager;
@@ -159,7 +158,7 @@ class Brick
      */
     public static function getProjectForBrick(QUI\Bricks\Brick $Brick): QUI\Projects\Project
     {
-        $project  = $Brick->getAttribute('project');
+        $project = $Brick->getAttribute('project');
         $language = $Brick->getAttribute('lang');
 
         return QUI\Projects\Manager::getProject($project, $language);
