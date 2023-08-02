@@ -6,9 +6,9 @@
 
 namespace QUI\History;
 
+use PCSG\PhpHtmlDiff\HtmlDiff;
 use QUI;
 use QUI\Cache\Manager as CacheManager;
-use \PCSG\PhpHtmlDiff\HtmlDiff;
 
 /**
  * QUIQQER Site History functionality
@@ -36,11 +36,11 @@ class Site
     public static function onSave($Site)
     {
         $Project = $Site->getProject();
-        $table   = QUI::getDBProjectTableName('archiv', $Project);
+        $table = QUI::getDBProjectTableName('archiv', $Project);
 
-        $cacheId = $Project->getName().'_'.
-                   $Project->getLang().'_'.
-                   $Site->getId();
+        $cacheId = $Project->getName() . '_' .
+            $Project->getLang() . '_' .
+            $Site->getId();
 
         try {
             $cacheTime = CacheManager::get($cacheId);
@@ -52,7 +52,7 @@ class Site
         // we need not every 10 seconds a history entry
         // @todo maybe settings for minutes or hours
         $cacheTTL = 10;
-        $diff     = time() - $cacheTime;
+        $diff = time() - $cacheTime;
 
         if ($diff <= $cacheTTL) {
             return;
@@ -65,19 +65,19 @@ class Site
 
             $countResult = QUI::getDataBase()->fetch([
                 'count' => 1,
-                'from'  => $table,
+                'from' => $table,
                 'where' => [
-                    'id'      => $Site->getId(),
+                    'id' => $Site->getId(),
                     'created' => $created
                 ]
             ]);
 
             if (empty(\current(\current($countResult)))) {
                 QUI::getDataBase()->insert($table, [
-                    'id'      => $Site->getId(),
+                    'id' => $Site->getId(),
                     'created' => $created,
-                    'data'    => json_encode($Site->getAttributes()),
-                    'uid'     => QUI::getUserBySession()->getId()
+                    'data' => json_encode($Site->getAttributes()),
+                    'uid' => QUI::getUserBySession()->getId()
                 ]);
             }
         } catch (QUI\Exception $Exception) {
@@ -94,10 +94,10 @@ class Site
         }
 
         $result = QUI::getDataBase()->fetch([
-            'from'  => $table,
+            'from' => $table,
             'count' => [
                 'select' => 'id',
-                'as'     => 'count'
+                'as' => 'count'
             ],
             'where' => [
                 'id' => $Site->getId()
@@ -116,12 +116,12 @@ class Site
         // could not delete directly
         // some mysql version dont support that, so we must delete the entries in an extra step
         $result = QUI::getDataBase()->fetch([
-            'from'  => $table,
+            'from' => $table,
             'where' => [
                 'id' => $Site->getId()
             ],
             'order' => 'created ASC',
-            'limit' => '0,'.$overflow
+            'limit' => '0,' . $overflow
         ]);
 
         foreach ($result as $entry) {
@@ -141,12 +141,12 @@ class Site
     public static function getList($Site)
     {
         $Project = $Site->getProject();
-        $table   = QUI::getDBProjectTableName('archiv', $Project);
-        $result  = [];
+        $table = QUI::getDBProjectTableName('archiv', $Project);
+        $result = [];
 
 
         $list = QUI::getDataBase()->fetch([
-            'from'  => $table,
+            'from' => $table,
             'order' => 'created DESC',
             'where' => [
                 'id' => $Site->getId()
@@ -157,15 +157,15 @@ class Site
             $username = '';
 
             try {
-                $User     = QUI::getUsers()->get($entry['uid']);
+                $User = QUI::getUsers()->get($entry['uid']);
                 $username = $User->getName();
             } catch (QUI\Exception $Exception) {
             }
 
             $result[] = [
-                'created'  => $entry['created'],
-                'data'     => $entry['data'],
-                'uid'      => $entry['uid'],
+                'created' => $entry['created'],
+                'data' => $entry['data'],
+                'uid' => $entry['uid'],
                 'username' => $username
             ];
         }
@@ -187,10 +187,10 @@ class Site
         $Date = new \DateTime($date);
 
         $Project = $Site->getProject();
-        $table   = QUI::getDBProjectTableName('archiv', $Project);
+        $table = QUI::getDBProjectTableName('archiv', $Project);
 
         $result = QUI::getDataBase()->fetch([
-            'from'  => $table,
+            'from' => $table,
             'where' => [
                 'created' => $Date->format('Y-m-d H:i:s')
             ],
@@ -244,7 +244,7 @@ class Site
 
         $content = QUI\Control\Manager::setCSSToHead($content);
 
-        $Output  = new QUI\Output();
+        $Output = new QUI\Output();
         $content = $Output->parse($content);
 
         return $content;
@@ -283,7 +283,7 @@ class Site
     public static function restoreSite($Site, $date)
     {
         $Project = $Site->getProject();
-        $data    = self::getHistoryEntry($Site, $date);
+        $data = self::getHistoryEntry($Site, $date);
 
         $SiteEdit = new QUI\Projects\Site\Edit($Project, $Site->getId());
 
