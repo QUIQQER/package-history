@@ -2,9 +2,11 @@
 
 namespace QUI\History\Exception;
 
+use QUI\Exception;
+
 /**
  * @author www.pcsg.de (Jan Wennrich)
  */
-class HistoryEntryNotFoundException extends \QUI\Exception
+class HistoryEntryNotFoundException extends Exception
 {
 }
