@@ -1,5 +1,7 @@
 <?php
 
+use QUI\Exception;
+
 /**
  * Compare two history entries with each other
  * And return the comparison
@@ -9,11 +11,11 @@
  * @param                $date1
  * @param                $date2
  *
- * @return String
- * @throws \QUI\Exception
+ * @return array
+ * @throws Exception
  */
 
-function package_quiqqer_history_ajax_compare(string $project, int|string $id, $date1, $date2): array|string
+function package_quiqqer_history_ajax_compare(string $project, int|string $id, $date1, $date2): array
 {
     $History = new QUI\History\Site();
     $Project = QUI::getProjectManager()->decode($project);
