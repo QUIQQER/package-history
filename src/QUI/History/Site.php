@@ -82,7 +82,7 @@ class Site
                     'id' => $Site->getId(),
                     'created' => $created,
                     'data' => json_encode($Site->getAttributes()),
-                    'uid' => QUI::getUserBySession()->getId()
+                    'uid' => QUI::getUserBySession()->getUUID()
                 ]);
             }
         } catch (QUI\Exception $Exception) {

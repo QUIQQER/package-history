@@ -81,7 +81,7 @@ class Brick
                 'id' => $brickId,
                 'created' => (new DateTime())->format('Y-m-d H:i:s'),
                 'data' => json_encode($Brick->getAttributes()),
-                'uid' => QUI::getUserBySession()->getId()
+                'uid' => QUI::getUserBySession()->getUUID()
             ]);
         } catch (QUI\Database\Exception) {
             // History entry for this brick and date already exists
