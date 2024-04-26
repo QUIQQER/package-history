@@ -1,5 +1,5 @@
 {
-  "name": "quiqqer\/history",
+  "name": "quiqqer/history",
   "type": "quiqqer-module",
   "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
   "license": [
@@ -10,7 +10,7 @@
     {
       "name": "Henning Leutz",
       "email": "leutz@pcsg.de",
-      "homepage": "http:\/\/www.pcsg.de",
+      "homepage": "https://www.pcsg.de",
       "role": "Developer"
     },
     {
@@ -24,13 +24,13 @@
     "email": "support@pcsg.de"
   },
   "require": {
-    "quiqqer\/quiqqer": "^2",
-    "quiqqer\/bricks": "^1.6",
-    "pcsg\/php-htmldiff": "^2"
+    "quiqqer/core": "^2",
+    "quiqqer/bricks": "^2",
+    "pcsg/php-htmldiff": "^2"
   },
   "autoload": {
     "psr-4": {
-      "QUI\\History\\": "src\/QUI\/History"
+      "QUI\\History\\": "src/QUI/History"
     }
   }
 }
