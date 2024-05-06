@@ -3,18 +3,18 @@
 /**
  * Return the HTML of the Site-ID from a given history entry
  *
- * @param String $project - Project data; JSON Array
- * @param String|Integer $id - Site-ID
- * @param Integer|\DateTime $date - Timestamp of the history entry
+ * @param string $project - Project data; JSON Array
+ * @param int|string $id - Site-ID
+ * @param DateTime|int $date - Timestamp of the history entry
  *
- * @return String - HTML of the History Entry
+ * @return string - HTML of the History Entry
  * @throws \QUI\Exception
  */
-function package_quiqqer_history_ajax_preview($project, $id, $date)
+function package_quiqqer_history_ajax_preview(string $project, int|string $id, DateTime|int $date): string
 {
     $History = new QUI\History\Site();
     $Project = QUI::getProjectManager()->decode($project);
-    $Site    = $Project->get($id);
+    $Site = $Project->get($id);
 
     if (!isset($_REQUEST['_url'])) {
         $_REQUEST['_url'] = $Site->getUrlRewritten();
