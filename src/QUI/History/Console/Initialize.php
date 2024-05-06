@@ -3,6 +3,9 @@
 namespace QUI\History\Console;
 
 use QUI;
+use QUI\Bricks\Brick;
+use QUI\Database\Exception;
+use QUI\Projects\Project;
 use QUI\System\Console\Tool;
 
 class Initialize extends Tool
@@ -15,7 +18,10 @@ class Initialize extends Tool
             ->setDescription(QUI::getLocale()->get('quiqqer/history', 'console.initialize.description'));
     }
 
-    public function execute()
+    /**
+     * @throws Exception
+     */
+    public function execute(): void
     {
         $projects = QUI::getProjectManager()::getProjectList();
 
@@ -40,11 +46,12 @@ class Initialize extends Tool
     /**
      * Creates an initial history entry for the sites of the given project.
      *
-     * @param \QUI\Projects\Project $Project
+     * @param Project $Project
      *
      * @return void
+     * @throws Exception
      */
-    protected function processSites(QUI\Projects\Project $Project): void
+    protected function processSites(Project $Project): void
     {
         $siteIds = $Project->getSitesIds();
 
@@ -80,15 +87,15 @@ class Initialize extends Tool
     /**
      * Creates an initial history entry for the bricks of the given project.
      *
-     * @param \QUI\Projects\Project $Project
+     * @param Project $Project
      *
      * @return void
      */
-    protected function processBricks(QUI\Projects\Project $Project): void
+    protected function processBricks(Project $Project): void
     {
         $BricksManager = QUI\Bricks\Manager::init();
 
-        /** @var \QUI\Bricks\Brick[] $bricks */
+        /** @var Brick[] $bricks */
         try {
             $bricks = $BricksManager->getBricksFromProject($Project);
         } catch (QUI\Exception $Exception) {
@@ -122,7 +129,7 @@ class Initialize extends Tool
                         'console.initialize.process.brick.error.saveBrick',
                         [
                             'brickId' => $brickId,
-                            'reason'  => $Exception->getMessage()
+                            'reason' => $Exception->getMessage()
                         ]
                     ),
                     'yellow'
