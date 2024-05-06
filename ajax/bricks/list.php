@@ -7,7 +7,6 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_history_ajax_bricks_list',
     function ($brickId) {
         $Brick = BrickManager::init()->getBrickById($brickId);
-
         return BrickHistory::getHistoryEntries($Brick);
     },
     ['brickId'],

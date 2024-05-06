@@ -21,7 +21,7 @@ use function time;
 class Brick
 {
     /**
-     * The name of the project's table used to store the bricks history.
+     * The name of the project's table used to store the bricks' history.
      */
     public const PROJECT_TABLE_NAME = 'history_bricks';
 
@@ -31,17 +31,17 @@ class Brick
      *
      * @param int $brickId
      *
-     * @throws QUI\Exception
+     * @throws Exception
      */
-    public static function onSave(int $brickId)
+    public static function onSave(int $brickId): void
     {
         $Brick = QUI\Bricks\Manager::init()->getBrickById($brickId);
 
-        $cacheKeyLastSave = "history_bricks_last_save_${brickId}";
+        $cacheKeyLastSave = "history_bricks_last_save_$brickId";
 
         try {
             $lastSave = CacheManager::get($cacheKeyLastSave);
-        } catch (QUI\Cache\Exception $Exception) {
+        } catch (QUI\Cache\Exception) {
             $lastSave = 0;
         }
 
@@ -81,9 +81,9 @@ class Brick
                 'id' => $brickId,
                 'created' => (new DateTime())->format('Y-m-d H:i:s'),
                 'data' => json_encode($Brick->getAttributes()),
-                'uid' => QUI::getUserBySession()->getId()
+                'uid' => QUI::getUserBySession()->getUUID()
             ]);
-        } catch (QUI\Database\Exception $Exception) {
+        } catch (QUI\Database\Exception) {
             // History entry for this brick and date already exists
             return false;
         }
@@ -170,14 +170,14 @@ class Brick
      * Throws an exception if no entry exists.
      *
      * @param QUI\Bricks\Brick $Brick
-     * @param \DateTime $Date
+     * @param DateTime $Date
      *
      * @return array
      *
      * @throws QUI\History\Exception\HistoryEntryNotFoundException
      * @throws Exception
      */
-    public static function getHistoryEntryData(QUI\Bricks\Brick $Brick, \DateTime $Date): array
+    public static function getHistoryEntryData(QUI\Bricks\Brick $Brick, DateTime $Date): array
     {
         $table = QUI::getDBProjectTableName(
             static::PROJECT_TABLE_NAME,
@@ -231,7 +231,7 @@ class Brick
      * @return string
      *
      * @throws Exception
-     * @throws Exception\HistoryEntryNotFoundException
+     * @throws QUI\History\Exception\HistoryEntryNotFoundException
      */
     public static function generateDifference(QUI\Bricks\Brick $Brick, DateTime $Date1, DateTime $Date2): string
     {
@@ -247,12 +247,12 @@ class Brick
     /**
      * Returns an array of all history entries for the given brick.
      *
-     * @param \QUI\Bricks\Brick $Brick
+     * @param QUI\Bricks\Brick $Brick
      *
      * @return array
      *
-     * @throws \QUI\Database\Exception
-     * @throws \QUI\Exception
+     * @throws QUI\Database\Exception
+     * @throws Exception
      */
     public static function getHistoryEntries(QUI\Bricks\Brick $Brick): array
     {
@@ -274,7 +274,7 @@ class Brick
         foreach ($historyEntries as $historyEntry) {
             try {
                 $username = QUI::getUsers()->get($historyEntry['uid'])->getName();
-            } catch (QUI\Exception $Exception) {
+            } catch (Exception) {
                 $username = '?';
             }
 

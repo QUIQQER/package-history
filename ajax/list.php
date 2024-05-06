@@ -1,24 +1,26 @@
 <?php
 
+use QUI\History\Site;
+
 /**
  * Return the history entries of a given Site-ID
  *
- * @param String         $project - Project data; JSON Array
- * @param String|Integer $id      - Site-ID
+ * @param string $project - Project data; JSON Array
+ * @param int|string $id - Site-ID
  *
- * @return Array
+ * @return array
  * @throws \QUI\Exception
  */
-function package_quiqqer_history_ajax_list($project, $id)
+function package_quiqqer_history_ajax_list(string $project, int|string $id): array
 {
-    $History = new \QUI\History\Site();
-    $Project = \QUI::getProjectManager()->decode($project);
+    $History = new Site();
+    $Project = QUI::getProjectManager()->decode($project);
     $Site = $Project->get($id);
 
     return $History->getList($Site);
 }
 
-\QUI::$Ajax->register(
+QUI::$Ajax->register(
     'package_quiqqer_history_ajax_list',
-    array('project', 'id')
+    ['project', 'id']
 );

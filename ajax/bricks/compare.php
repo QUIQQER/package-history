@@ -14,7 +14,7 @@ QUI::$Ajax->registerFunction(
         $DateNewest = max($dates);
 
         return [
-            "originalHtml"   => BrickHistory::getHistoryEntryData($Brick, $DateOldest)['content'],
+            "originalHtml" => BrickHistory::getHistoryEntryData($Brick, $DateOldest)['content'],
             "differenceHtml" => BrickHistory::generateDifference($Brick, $DateOldest, $DateNewest)
         ];
     },

@@ -6,7 +6,7 @@
             <field type="BIGINT(20) NOT NULL">id</field>
             <field type="DATETIME NOT NULL">created</field>
             <field type="LONGTEXT NULL">data</field>
-            <field type="INT(11)">uid</field>
+            <field type="varchar(50)">uid</field>
 
             <primary>id,created</primary>
         </table>
@@ -15,7 +15,7 @@
             <field type="INT(3) NOT NULL">id</field>
             <field type="DATETIME NOT NULL">created</field>
             <field type="LONGTEXT NULL">data</field>
-            <field type="INT(11)">uid</field>
+            <field type="varchar(50)">uid</field>
 
             <primary>id,created</primary>
         </table>

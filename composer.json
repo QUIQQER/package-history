@@ -1,36 +1,36 @@
 {
-    "name": "quiqqer\/history",
-    "type": "quiqqer-module",
-    "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
-    "license": [
-        "CC BY-NC-SA 4.0",
-        "PCSG QL-1.0"
-    ],
-    "authors": [
-        {
-            "name": "Henning Leutz",
-            "email": "leutz@pcsg.de",
-            "homepage": "http:\/\/www.pcsg.de",
-            "role": "Developer"
-        },
-        {
-            "name": "Jan Wennrich",
-            "email": "wennrich@pcsg.de",
-            "homepage": "https://www.pcsg.de",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "email": "support@pcsg.de"
+  "name": "quiqqer/history",
+  "type": "quiqqer-module",
+  "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
+  "license": [
+    "CC BY-NC-SA 4.0",
+    "PCSG QL-1.0"
+  ],
+  "authors": [
+    {
+      "name": "Henning Leutz",
+      "email": "leutz@pcsg.de",
+      "homepage": "https://www.pcsg.de",
+      "role": "Developer"
     },
-    "require": {
-        "quiqqer\/quiqqer": "^1.7.3|dev-master|dev-dev",
-        "quiqqer\/bricks": "^1.6.0|dev-master|dev-dev",
-        "pcsg\/php-htmldiff": "2.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "QUI\\History\\": "src\/QUI\/History"
-        }
+    {
+      "name": "Jan Wennrich",
+      "email": "wennrich@pcsg.de",
+      "homepage": "https://www.pcsg.de",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "support@pcsg.de"
+  },
+  "require": {
+    "quiqqer/core": "^2",
+    "quiqqer/bricks": "^2",
+    "pcsg/php-htmldiff": "^2"
+  },
+  "autoload": {
+    "psr-4": {
+      "QUI\\History\\": "src/QUI/History"
+    }
+  }
 }
