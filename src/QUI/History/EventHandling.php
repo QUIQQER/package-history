@@ -30,5 +30,26 @@ class EventHandling
                 }
             }
         }
+
+        $Console->writeLn('- Migrate brick history (archive brick tables)');
+
+        /* @var $Project QUI\Projects\Project */
+        foreach ($projects as $Project) {
+            $table = QUI::getDBProjectTableName('history_bricks', $Project);
+            $entries = QUI::getDataBase()->fetch([
+                'from' => $table
+            ]);
+
+            foreach ($entries as $entry) {
+                try {
+                    QUI::getDataBase()->update(
+                        $table,
+                        ['uid' => QUI::getUsers()->get($entry['uid'])->getUUID()],
+                        ['id' => $entry['id']]
+                    );
+                } catch (QUI\Exception) {
+                }
+            }
+        }
     }
 }
