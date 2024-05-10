@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <events>
     <event on="onSiteSave" fire="\QUI\History\Site::onSave" />
-
     <event on="onQuiqqerBricksSave" fire="\QUI\History\Brick::onSave" />
+    <event on="onQuiqqerMigrationV2" fire="\QUI\History\EventHandling::onQuiqqerMigrationV2"/>
+
 </events>
