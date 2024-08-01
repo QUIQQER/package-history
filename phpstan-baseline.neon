@@ -1,0 +1,16 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method QUI\\\\Projects\\\\Site\\:\\:save\\(\\)\\.$#"
+			count: 1
+			path: src/QUI/History/Console/Initialize.php
+
+		-
+			message: "#^Variable \\$bricks in PHPDoc tag @var does not exist\\.$#"
+			count: 1
+			path: src/QUI/History/Console/Initialize.php
+
+		-
+			message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, int given\\.$#"
+			count: 1
+			path: src/QUI/History/Site.php
