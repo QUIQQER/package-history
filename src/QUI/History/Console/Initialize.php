@@ -67,7 +67,9 @@ class Initialize extends Tool
                     continue;
                 }
 
-                $Site->save();
+                if (method_exists($Site, 'save')) {
+                    $Site->save();
+                }
             } catch (QUI\Exception $Exception) {
                 $this->writeLn(
                     QUI::getLocale()->get(
@@ -95,7 +97,6 @@ class Initialize extends Tool
     {
         $BricksManager = QUI\Bricks\Manager::init();
 
-        /** @var Brick[] $bricks */
         try {
             $bricks = $BricksManager->getBricksFromProject($Project);
         } catch (QUI\Exception $Exception) {
@@ -113,6 +114,7 @@ class Initialize extends Tool
             return;
         }
 
+        /** @var Brick[] $bricks */
         foreach ($bricks as $Brick) {
             $brickId = $Brick->getAttribute('id');
 
