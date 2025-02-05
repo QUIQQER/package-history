@@ -190,7 +190,7 @@ class Site
     public static function getHistoryEntry(QUI\Interfaces\Projects\Site $Site, DateTime|int $date): array
     {
         if (is_int($date)) {
-            $Date = new DateTime($date);
+            $Date = new DateTime((string)$date);
         } else {
             $Date = $date;
         }
