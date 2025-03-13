@@ -10,6 +10,7 @@
  * @return string - HTML of the History Entry
  * @throws QUI\Exception
  * @throws QUI\ExceptionStack
+ * @throws DateMalformedStringException
  */
 function package_quiqqer_history_ajax_preview(
     string $project,
@@ -25,7 +26,7 @@ function package_quiqqer_history_ajax_preview(
     }
 
     if (is_string($date)) {
-        $date = (int)$date;
+        $date = new DateTime($date);
     }
 
     return $History->getHTMLFromHistoryEntry($Site, $date);

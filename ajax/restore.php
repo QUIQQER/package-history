@@ -21,7 +21,7 @@ function package_quiqqer_history_ajax_restore(
     $Site = $Project->get($id);
 
     if (is_string($date)) {
-        $date = (int)$date;
+        $date = new DateTime($date);
     }
 
     $History->restoreSite($Site, $date);
