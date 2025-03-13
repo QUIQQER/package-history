@@ -187,7 +187,7 @@ class Site
      * @throws QUI\Exception
      * @throws Exception
      */
-    public static function getHistoryEntry(QUI\Interfaces\Projects\Site $Site, DateTime|int $date): array
+    public static function getHistoryEntry(QUI\Interfaces\Projects\Site $Site, DateTime | int $date): array
     {
         if (is_int($date)) {
             $Date = new DateTime((string)$date);
@@ -228,7 +228,7 @@ class Site
      *
      * @throws QUI\Exception
      */
-    public static function getHTMLFromHistoryEntry(QUI\Interfaces\Projects\Site $Site, DateTime|int $date): string
+    public static function getHTMLFromHistoryEntry(QUI\Interfaces\Projects\Site $Site, DateTime | int $date): string
     {
         $data = self::getHistoryEntry($Site, $date);
 
@@ -267,8 +267,8 @@ class Site
      */
     public static function getDiffFromSite(
         QUI\Interfaces\Projects\Site $Site,
-        DateTime|int $date1,
-        DateTime|int $date2
+        DateTime | int $date1,
+        DateTime | int $date2
     ): string {
         $entry1 = self::getHTMLFromHistoryEntry($Site, $date1);
         $entry2 = self::getHTMLFromHistoryEntry($Site, $date2);
@@ -287,7 +287,7 @@ class Site
      *
      * @throws QUI\Exception
      */
-    public static function restoreSite(QUI\Interfaces\Projects\Site $Site, DateTime|int $date): void
+    public static function restoreSite(QUI\Interfaces\Projects\Site $Site, DateTime | int $date): void
     {
         $Project = $Site->getProject();
         $data = self::getHistoryEntry($Site, $date);
