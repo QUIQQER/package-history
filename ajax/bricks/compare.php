@@ -1,12 +1,17 @@
 <?php
 
 use QUI\Bricks\Manager as BrickManager;
+use QUI\Exception;
 use QUI\History\Brick as BrickHistory;
 
-QUI::$Ajax->registerFunction(
+QUI::getAjax()->registerFunction(
     'package_quiqqer_history_ajax_bricks_compare',
     function ($brickId, $date1, $date2) {
-        $Brick = BrickManager::init()->getBrickById($brickId);
+        $Brick = BrickManager::init()?->getBrickById($brickId);
+
+        if ($Brick === null) {
+            throw new Exception('Brick manager not available');
+        }
 
         $dates = [new DateTime($date1), new DateTime($date2)];
 

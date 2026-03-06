@@ -11,7 +11,7 @@ use QUI\Exception;
  * @param DateTime|int|string $date1
  * @param DateTime|int|string $date2
  *
- * @return array
+ * @return array{originalHtml: string, differenceHtml: string}
  * @throws Exception|DateMalformedStringException
  */
 
@@ -23,7 +23,7 @@ function package_quiqqer_history_ajax_compare(
 ): array {
     $History = new QUI\History\Site();
     $Project = QUI::getProjectManager()->decode($project);
-    $Site = $Project->get($id);
+    $Site = $Project->get((int)$id);
 
     if (is_string($date1)) {
         $date1 = new DateTime($date1);
@@ -42,7 +42,7 @@ function package_quiqqer_history_ajax_compare(
     ];
 }
 
-QUI::$Ajax->register(
+QUI::getAjax()->register(
     'package_quiqqer_history_ajax_compare',
     ['project', 'id', 'date1', 'date2']
 );

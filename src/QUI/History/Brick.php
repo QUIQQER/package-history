@@ -35,7 +35,13 @@ class Brick
      */
     public static function onSave(int $brickId): void
     {
-        $Brick = QUI\Bricks\Manager::init()->getBrickById($brickId);
+        $BrickManager = QUI\Bricks\Manager::init();
+
+        if ($BrickManager === null) {
+            throw new Exception('Brick manager not available');
+        }
+
+        $Brick = $BrickManager->getBrickById($brickId);
 
         $cacheKeyLastSave = "history_bricks_last_save_$brickId";
 
@@ -172,7 +178,7 @@ class Brick
      * @param QUI\Bricks\Brick $Brick
      * @param DateTime $Date
      *
-     * @return array
+     * @return array<string, mixed>
      *
      * @throws QUI\History\Exception\HistoryEntryNotFoundException
      * @throws Exception
@@ -215,7 +221,13 @@ class Brick
      */
     public static function restore(QUI\Bricks\Brick $Brick, DateTime $Date): void
     {
-        QUI\Bricks\Manager::init()->saveBrick(
+        $BrickManager = QUI\Bricks\Manager::init();
+
+        if ($BrickManager === null) {
+            throw new Exception('Brick manager not available');
+        }
+
+        $BrickManager->saveBrick(
             $Brick->getAttribute('id'),
             static::getHistoryEntryData($Brick, $Date)
         );
@@ -249,7 +261,7 @@ class Brick
      *
      * @param QUI\Bricks\Brick $Brick
      *
-     * @return array
+     * @return list<array{created: string, data: string, uid: string, username: string}>
      *
      * @throws QUI\Database\Exception
      * @throws Exception
@@ -281,7 +293,7 @@ class Brick
             $result[] = [
                 'created' => $historyEntry['created'],
                 'data' => $historyEntry['data'],
-                'uid' => $historyEntry['uid'],
+                'uid' => (string)$historyEntry['uid'],
                 'username' => $username
             ];
         }

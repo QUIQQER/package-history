@@ -97,6 +97,21 @@ class Initialize extends Tool
     {
         $BricksManager = QUI\Bricks\Manager::init();
 
+        if ($BricksManager === null) {
+            $this->writeLn(
+                QUI::getLocale()->get(
+                    'quiqqer/history',
+                    'console.initialize.process.brick.error.getBricks',
+                    [
+                        'reason' => 'Brick manager not available'
+                    ]
+                ),
+                'yellow'
+            );
+
+            return;
+        }
+
         try {
             $bricks = $BricksManager->getBricksFromProject($Project);
         } catch (QUI\Exception $Exception) {

@@ -18,7 +18,7 @@ function package_quiqqer_history_ajax_restore(
 ): void {
     $History = new Site();
     $Project = QUI::getProjectManager()->decode($project);
-    $Site = $Project->get($id);
+    $Site = $Project->get((int)$id);
 
     if (is_string($date)) {
         $date = new DateTime($date);
@@ -27,7 +27,7 @@ function package_quiqqer_history_ajax_restore(
     $History->restoreSite($Site, $date);
 }
 
-QUI::$Ajax->register(
+QUI::getAjax()->register(
     'package_quiqqer_history_ajax_restore',
     ['project', 'id', 'date']
 );
