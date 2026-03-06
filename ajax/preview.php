@@ -19,7 +19,7 @@ function package_quiqqer_history_ajax_preview(
 ): string {
     $History = new QUI\History\Site();
     $Project = QUI::getProjectManager()->decode($project);
-    $Site = $Project->get($id);
+    $Site = $Project->get((int)$id);
 
     if (!isset($_REQUEST['_url'])) {
         $_REQUEST['_url'] = $Site->getUrlRewritten();
@@ -32,7 +32,7 @@ function package_quiqqer_history_ajax_preview(
     return $History->getHTMLFromHistoryEntry($Site, $date);
 }
 
-QUI::$Ajax->register(
+QUI::getAjax()->register(
     'package_quiqqer_history_ajax_preview',
     ['project', 'id', 'date']
 );

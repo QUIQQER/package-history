@@ -27,7 +27,8 @@ class Site
 {
     /**
      * internal cache
-     * @var array
+     *
+     * @var array<string, mixed>
      */
     public static array $cache = [];
 
@@ -138,7 +139,7 @@ class Site
      * Return the history from a Site
      *
      * @param QUI\Interfaces\Projects\Site $Site
-     * @return array
+     * @return list<array{created: string, data: string, uid: string, username: string}>
      *
      * @throws QUI\Exception
      */
@@ -169,7 +170,7 @@ class Site
             $result[] = [
                 'created' => $entry['created'],
                 'data' => $entry['data'],
-                'uid' => $entry['uid'],
+                'uid' => (string)$entry['uid'],
                 'username' => $username
             ];
         }
@@ -183,7 +184,7 @@ class Site
      * @param QUI\Interfaces\Projects\Site $Site
      * @param DateTime|integer $date
      *
-     * @return array
+     * @return array<string, mixed>
      * @throws QUI\Exception
      * @throws Exception
      */
