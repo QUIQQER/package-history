@@ -2,6 +2,8 @@
 
 namespace QUITests\History\Console;
 
+require_once __DIR__ . '/TestableInitialize.php';
+
 use PHPUnit\Framework\TestCase;
 use QUI\History\Console\Initialize;
 use QUI\Projects\Project;
@@ -24,13 +26,5 @@ class InitializeTest extends TestCase
         $Tool->processSitesPublic($Project);
 
         $this->assertTrue(true);
-    }
-}
-
-class TestableInitialize extends Initialize
-{
-    public function processSitesPublic(Project $Project): void
-    {
-        $this->processSites($Project);
     }
 }

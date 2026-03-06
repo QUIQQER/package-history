@@ -2,6 +2,8 @@
 
 namespace QUITests\History;
 
+require_once __DIR__ . '/TestableBrick.php';
+
 use DateTime;
 use PHPUnit\Framework\TestCase;
 use QUI\Bricks\Brick;
@@ -37,28 +39,5 @@ class BrickUnitTest extends TestCase
             str_contains($diff, '<ins') || str_contains($diff, '<del'),
             'Diff output should contain insertion/deletion tags'
         );
-    }
-}
-
-class TestableBrick extends HistoryBrick
-{
-    /** @var array<string, array<string, mixed>> */
-    private static array $entries = [];
-
-    public static function setEntry(DateTime $Date, string $content): void
-    {
-        self::$entries[$Date->format('Y-m-d H:i:s')] = ['content' => $content];
-    }
-
-    public static function resetEntries(): void
-    {
-        self::$entries = [];
-    }
-
-    public static function getHistoryEntryData(Brick $Brick, DateTime $Date): array
-    {
-        $key = $Date->format('Y-m-d H:i:s');
-
-        return self::$entries[$key] ?? ['content' => ''];
     }
 }
