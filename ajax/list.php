@@ -17,7 +17,7 @@ function package_quiqqer_history_ajax_list(string $project, int|string $id): arr
     $Project = QUI::getProjectManager()->decode($project);
     $Site = $Project->get((int)$id);
 
-    return array_values($History->getList($Site));
+    return $History->getList($Site);
 }
 
 QUI::getAjax()->register(
