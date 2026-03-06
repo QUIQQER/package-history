@@ -13,12 +13,12 @@ class InitializeTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$InitializeClass = new class extends Initialize {
+        self::$InitializeClass = get_class(new class extends Initialize {
             public function processSitesPublic(Project $Project): void
             {
                 $this->processSites($Project);
             }
-        }::class;
+        });
     }
 
     public function testConstructorSetsCommandName(): void

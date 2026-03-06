@@ -14,7 +14,7 @@ class BrickUnitTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$BrickClass = new class extends HistoryBrick {
+        self::$BrickClass = get_class(new class extends HistoryBrick {
             /** @var array<string, array<string, mixed>> */
             private static array $entries = [];
 
@@ -34,7 +34,7 @@ class BrickUnitTest extends TestCase
 
                 return self::$entries[$key] ?? ['content' => ''];
             }
-        }::class;
+        });
     }
 
     protected function tearDown(): void
