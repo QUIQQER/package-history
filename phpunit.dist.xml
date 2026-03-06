@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/phpunit-bootstrap.php">
     <testsuites>
-        <testsuite name="Tests">
-            <directory>tests/</directory>
+        <testsuite name="Unit">
+            <directory>tests/QUITests/</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
 </phpunit>
