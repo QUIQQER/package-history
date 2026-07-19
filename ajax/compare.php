@@ -1,7 +1,5 @@
 <?php
 
-use QUI\Exception;
-
 /**
  * Compare two history entries with each other
  * And return the comparison
@@ -12,7 +10,7 @@ use QUI\Exception;
  * @param DateTime|int|string $date2
  *
  * @return array{originalHtml: string, differenceHtml: string}
- * @throws Exception|DateMalformedStringException
+ * @throws \Exception
  */
 
 function package_quiqqer_history_ajax_compare(
