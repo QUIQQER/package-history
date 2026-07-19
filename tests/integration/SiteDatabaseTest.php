@@ -42,6 +42,12 @@ class SiteDatabaseTest extends DatabaseTestCase
     {
         $this->insertEntry(
             $this->siteTable,
+            self::SITE_ID + 1,
+            '2024-02-01 10:00:00',
+            '{"title":"Different site"}'
+        );
+        $this->insertEntry(
+            $this->siteTable,
             self::SITE_ID,
             '2024-02-01 10:00:00',
             '{"title":"Version 1","active":true}'
@@ -56,6 +62,13 @@ class SiteDatabaseTest extends DatabaseTestCase
         self::assertSame(
             ['title' => 'Version 1', 'active' => true],
             SiteHistory::getHistoryEntry($this->createSite(), new DateTime('2024-02-01 10:00:00'))
+        );
+        self::assertSame(
+            ['title' => 'Version 1', 'active' => true],
+            SiteHistory::getHistoryEntry(
+                $this->createSite(),
+                (new DateTime('2024-02-01 10:00:00'))->getTimestamp()
+            )
         );
         self::assertSame(
             [],

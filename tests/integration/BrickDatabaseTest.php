@@ -121,6 +121,12 @@ class BrickDatabaseTest extends DatabaseTestCase
     {
         $this->insertEntry(
             $this->brickTable,
+            self::BRICK_ID + 1,
+            '2024-02-01 10:00:00',
+            '{"content":"different brick"}'
+        );
+        $this->insertEntry(
+            $this->brickTable,
             self::BRICK_ID,
             '2024-02-01 10:00:00',
             'invalid json'

@@ -3,19 +3,19 @@
 
     <projects>
         <table name="archiv" no-auto-update="1" no-site-reference="1">
-            <field type="BIGINT(20) NOT NULL">id</field>
-            <field type="DATETIME NOT NULL">created</field>
-            <field type="LONGTEXT NULL">data</field>
-            <field type="varchar(50)">uid</field>
+            <field type="bigint">id</field>
+            <field type="datetime">created</field>
+            <field type="text" nullable="true" default="null">data</field>
+            <field type="string" length="50">uid</field>
 
             <primary>id,created</primary>
         </table>
 
         <table name="history_bricks" no-auto-update="1" no-site-reference="1">
-            <field type="INT(3) NOT NULL">id</field>
-            <field type="DATETIME NOT NULL">created</field>
-            <field type="LONGTEXT NULL">data</field>
-            <field type="varchar(50)">uid</field>
+            <field type="integer">id</field>
+            <field type="datetime">created</field>
+            <field type="text" nullable="true" default="null">data</field>
+            <field type="string" length="50">uid</field>
 
             <primary>id,created</primary>
         </table>

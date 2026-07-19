@@ -8,13 +8,10 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use PHPUnit\Framework\TestCase;
 use QUI;
-use QUI\Database\DB;
 use QUI\Interfaces\Users\User;
 use QUI\Projects\Project;
 use QUI\Users\Manager as UserManager;
 use ReflectionProperty;
-
-require_once __DIR__ . '/../stubs/SqliteCompatibleLegacyDatabase.php';
 
 abstract class DatabaseTestCase extends TestCase
 {
@@ -24,7 +21,6 @@ abstract class DatabaseTestCase extends TestCase
     protected string $brickTable;
 
     private ?Connection $originalConnection;
-    private ?DB $originalLegacyDatabase;
     private ?UserManager $originalUserManager;
 
     protected function setUp(): void
@@ -33,7 +29,6 @@ abstract class DatabaseTestCase extends TestCase
 
         $ConnectionProperty = new ReflectionProperty(QUI::class, 'QueryBuilder');
         $this->originalConnection = $ConnectionProperty->getValue();
-        $this->originalLegacyDatabase = QUI::$DataBase2;
         $this->originalUserManager = QUI::$Users;
 
         $this->Connection = DriverManager::getConnection([
@@ -42,9 +37,6 @@ abstract class DatabaseTestCase extends TestCase
         ]);
 
         $ConnectionProperty->setValue(null, $this->Connection);
-        QUI::$DataBase2 = new SqliteCompatibleLegacyDatabase([
-            'doctrine' => $this->Connection
-        ]);
 
         $this->Project = $this->createProject();
         $this->siteTable = QUI::getDBProjectTableName('archiv', $this->Project);
@@ -61,7 +53,6 @@ abstract class DatabaseTestCase extends TestCase
 
         $ConnectionProperty = new ReflectionProperty(QUI::class, 'QueryBuilder');
         $ConnectionProperty->setValue(null, $this->originalConnection);
-        QUI::$DataBase2 = $this->originalLegacyDatabase;
         QUI::$Users = $this->originalUserManager;
 
         parent::tearDown();

@@ -3,10 +3,12 @@
 namespace QUI\History;
 
 use DateTime;
+use Doctrine\DBAL\Exception as DbalException;
 use PCSG\PhpHtmlDiff\HtmlDiff;
 use QUI;
 use QUI\Cache\Manager as CacheManager;
 use QUI\Exception;
+use QUI\Utils\Doctrine;
 
 use function is_array;
 use function json_decode;
@@ -83,13 +85,13 @@ class Brick
         $table = QUI::getDBProjectTableName(static::PROJECT_TABLE_NAME, $Project);
 
         try {
-            QUI::getDataBase()->insert($table, [
+            QUI::getDataBaseConnection()->insert(Doctrine::quoteIdentifier($table), [
                 'id' => $brickId,
                 'created' => (new DateTime())->format('Y-m-d H:i:s'),
                 'data' => json_encode($Brick->getAttributes()),
                 'uid' => QUI::getUserBySession()->getUUID()
             ]);
-        } catch (QUI\Database\Exception) {
+        } catch (DbalException) {
             // History entry for this brick and date already exists
             return false;
         }
@@ -102,24 +104,20 @@ class Brick
         }
 
         try {
-            $result = QUI::getDataBase()->fetch([
-                'from' => $table,
-                'count' => [
-                    'select' => 'id',
-                    'as' => 'count'
-                ],
-                'where' => [
-                    'id' => $brickId
-                ]
-            ]);
-        } catch (QUI\Database\Exception $Exception) {
+            $QueryBuilder = QUI::getQueryBuilder();
+            $historyEntries = (int)$QueryBuilder
+                ->select('COUNT(id)')
+                ->from(Doctrine::quoteIdentifier($table))
+                ->where($QueryBuilder->expr()->eq('id', ':brickId'))
+                ->setParameter('brickId', $brickId)
+                ->executeQuery()
+                ->fetchOne();
+        } catch (DbalException $Exception) {
             QUI\System\Log::writeException($Exception);
 
             // History entry was successfully created, therefore true is returned
             return true;
         }
-
-        $historyEntries = (int)$result[0]['count'];
 
         if ($historyEntries <= $historyEntriesLimit) {
             // Limit not reached yet, everything is fine
@@ -130,24 +128,28 @@ class Brick
         $entriesToDeleteCount = $historyEntries - $historyEntriesLimit;
 
         try {
-            $outdatedEntries = QUI::getDataBase()->fetch([
-                'from' => $table,
-                'where' => [
-                    'id' => $brickId
-                ],
-                'order' => 'created ASC',
-                'limit' => $entriesToDeleteCount
-            ]);
-        } catch (QUI\Database\Exception $Exception) {
+            $QueryBuilder = QUI::getQueryBuilder();
+            $outdatedEntries = $QueryBuilder
+                ->select('id', 'created')
+                ->from(Doctrine::quoteIdentifier($table))
+                ->where($QueryBuilder->expr()->eq('id', ':brickId'))
+                ->setParameter('brickId', $brickId)
+                ->orderBy('created', 'ASC')
+                ->setMaxResults($entriesToDeleteCount)
+                ->executeQuery()
+                ->fetchAllAssociative();
+        } catch (DbalException $Exception) {
             QUI\System\Log::writeException($Exception);
 
             // History entry was successfully created, therefore true is returned
             return true;
         }
 
-        // Some MySQL versions don't support deleting with limit & offset, therefore this foreach loop is used
         foreach ($outdatedEntries as $outdatedEntry) {
-            QUI::getDataBase()->delete($table, $outdatedEntry);
+            QUI::getDataBaseConnection()->delete(Doctrine::quoteIdentifier($table), [
+                'id' => $outdatedEntry['id'],
+                'created' => $outdatedEntry['created']
+            ]);
         }
 
         return true;
@@ -164,8 +166,8 @@ class Brick
      */
     public static function getProjectForBrick(QUI\Bricks\Brick $Brick): QUI\Projects\Project
     {
-        $project = $Brick->getAttribute('project');
-        $language = $Brick->getAttribute('lang');
+        $project = (string)$Brick->getAttribute('project');
+        $language = (string)$Brick->getAttribute('lang');
 
         return QUI\Projects\Manager::getProject($project, $language);
     }
@@ -190,20 +192,23 @@ class Brick
             static::getProjectForBrick($Brick)
         );
 
-        $result = QUI::getDataBase()->fetch([
-            'select' => 'data',
-            'from' => $table,
-            'where' => [
-                'created' => $Date->format('Y-m-d H:i:s')
-            ],
-            'limit' => 1
-        ]);
+        $QueryBuilder = QUI::getQueryBuilder();
+        $dataJson = $QueryBuilder
+            ->select('data')
+            ->from(Doctrine::quoteIdentifier($table))
+            ->where($QueryBuilder->expr()->eq('id', ':brickId'))
+            ->andWhere($QueryBuilder->expr()->eq('created', ':created'))
+            ->setParameter('brickId', $Brick->getAttribute('id'))
+            ->setParameter('created', $Date->format('Y-m-d H:i:s'))
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchOne();
 
-        if (!isset($result[0])) {
+        if ($dataJson === false) {
             throw new QUI\History\Exception\HistoryEntryNotFoundException();
         }
 
-        $data = json_decode($result[0]['data'], true);
+        $data = json_decode((string)$dataJson, true);
 
         return is_array($data) ? $data : [];
     }
@@ -273,13 +278,15 @@ class Brick
             static::getProjectForBrick($Brick)
         );
 
-        $historyEntries = QUI::getDataBase()->fetch([
-            'from' => $table,
-            'order' => 'created DESC',
-            'where' => [
-                'id' => $Brick->getAttribute('id')
-            ]
-        ]);
+        $QueryBuilder = QUI::getQueryBuilder();
+        $historyEntries = $QueryBuilder
+            ->select('created', 'data', 'uid')
+            ->from(Doctrine::quoteIdentifier($table))
+            ->where($QueryBuilder->expr()->eq('id', ':brickId'))
+            ->setParameter('brickId', $Brick->getAttribute('id'))
+            ->orderBy('created', 'DESC')
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         $result = [];
 
