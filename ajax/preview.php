@@ -8,9 +8,7 @@
  * @param DateTime|int|string $date - Timestamp of the history entry
  *
  * @return string - HTML of the History Entry
- * @throws QUI\Exception
- * @throws QUI\ExceptionStack
- * @throws DateMalformedStringException
+ * @throws \Exception
  */
 function package_quiqqer_history_ajax_preview(
     string $project,

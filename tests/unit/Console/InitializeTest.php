@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace QUITests\History\Console;
 
 use PHPUnit\Framework\TestCase;

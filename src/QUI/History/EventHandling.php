@@ -4,6 +4,7 @@ namespace QUI\History;
 
 use QUI;
 use QUI\System\Console\Tools\MigrationV2;
+use QUI\Utils\Doctrine;
 
 class EventHandling
 {
@@ -15,16 +16,21 @@ class EventHandling
         /* @var $Project QUI\Projects\Project */
         foreach ($projects as $Project) {
             $table = QUI::getDBProjectTableName('archiv', $Project);
-            $entries = QUI::getDataBase()->fetch([
-                'from' => $table
-            ]);
+            $entries = QUI::getQueryBuilder()
+                ->select('id', 'created', 'uid')
+                ->from(Doctrine::quoteIdentifier($table))
+                ->executeQuery()
+                ->fetchAllAssociative();
 
             foreach ($entries as $entry) {
                 try {
-                    QUI::getDataBase()->update(
-                        $table,
+                    QUI::getDataBaseConnection()->update(
+                        Doctrine::quoteIdentifier($table),
                         ['uid' => QUI::getUsers()->get($entry['uid'])->getUUID()],
-                        ['id' => $entry['id']]
+                        [
+                            'id' => $entry['id'],
+                            'created' => $entry['created']
+                        ]
                     );
                 } catch (QUI\Exception) {
                 }
@@ -36,16 +42,21 @@ class EventHandling
         /* @var $Project QUI\Projects\Project */
         foreach ($projects as $Project) {
             $table = QUI::getDBProjectTableName('history_bricks', $Project);
-            $entries = QUI::getDataBase()->fetch([
-                'from' => $table
-            ]);
+            $entries = QUI::getQueryBuilder()
+                ->select('id', 'created', 'uid')
+                ->from(Doctrine::quoteIdentifier($table))
+                ->executeQuery()
+                ->fetchAllAssociative();
 
             foreach ($entries as $entry) {
                 try {
-                    QUI::getDataBase()->update(
-                        $table,
+                    QUI::getDataBaseConnection()->update(
+                        Doctrine::quoteIdentifier($table),
                         ['uid' => QUI::getUsers()->get($entry['uid'])->getUUID()],
-                        ['id' => $entry['id']]
+                        [
+                            'id' => $entry['id'],
+                            'created' => $entry['created']
+                        ]
                     );
                 } catch (QUI\Exception) {
                 }
