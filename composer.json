@@ -2,6 +2,7 @@
     "name": "quiqqer/history",
     "type": "quiqqer-module",
     "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
+    "homepage": "https://www.quiqqer.com",
     "license": [
         "CC BY-NC-SA 4.0",
         "PCSG QL-1.0"
@@ -21,9 +22,12 @@
         }
     ],
     "support": {
-        "email": "support@pcsg.de"
+        "email": "support@pcsg.de",
+        "issues": "https://dev.quiqqer.com/quiqqer/package-history/issues",
+        "source": "https://dev.quiqqer.com/quiqqer/package-history"
     },
     "require": {
+        "php": "^8.2",
         "quiqqer/core": "^2",
         "quiqqer/bricks": "^2",
         "pcsg/php-htmldiff": "^2"
@@ -31,6 +35,11 @@
     "autoload": {
         "psr-4": {
             "QUI\\History\\": "src/QUI/History"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "QUITests\\History\\": "tests/unit/"
         }
     },
     "scripts": {
