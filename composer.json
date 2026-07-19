@@ -1,7 +1,7 @@
 {
     "name": "quiqqer/history",
     "type": "quiqqer-module",
-    "description": "The loss of side data and content is a thing of the past. The History module saves different versions of each page and allows you to play back or match different versions of a page",
+    "description": "Stores versions of changes to QUIQQER sites and bricks and lets administrators preview, compare, and restore them.",
     "homepage": "https://www.quiqqer.com",
     "license": [
         "CC BY-NC-SA 4.0",
@@ -23,8 +23,8 @@
     ],
     "support": {
         "email": "support@pcsg.de",
-        "issues": "https://dev.quiqqer.com/quiqqer/package-history/issues",
-        "source": "https://dev.quiqqer.com/quiqqer/package-history"
+        "issues": "https://dev.quiqqer.com/quiqqer/history/issues",
+        "source": "https://dev.quiqqer.com/quiqqer/history"
     },
     "require": {
         "php": "^8.2",
