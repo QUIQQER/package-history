@@ -2,7 +2,10 @@
 <phpunit bootstrap="tests/phpunit-bootstrap.php">
     <testsuites>
         <testsuite name="Unit">
-            <directory>tests/QUITests/</directory>
+            <directory>tests/unit/</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/integration/</directory>
         </testsuite>
     </testsuites>
     <source>
@@ -10,4 +13,5 @@
             <directory suffix=".php">src</directory>
         </include>
     </source>
+    <coverage includeUncoveredFiles="true"/>
 </phpunit>

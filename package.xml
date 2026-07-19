@@ -20,9 +20,8 @@
         <support>
             <email><![CDATA[support@pcsg.de]]></email>
             <forum><![CDATA[https://community.quiqqer.com]]></forum>
-            <source><![CDATA[https://dev.quiqqer.com/quiqqer/package-history]]></source>
-            <issues><![CDATA[https://dev.quiqqer.com/quiqqer/package-history/issues]]></issues>
-            <wiki><![CDATA[https://dev.quiqqer.com/quiqqer/package-history/wikis/home]]></wiki>
+            <source><![CDATA[https://dev.quiqqer.com/quiqqer/history]]></source>
+            <issues><![CDATA[https://dev.quiqqer.com/quiqqer/history/issues]]></issues>
         </support>
 
         <copyright>

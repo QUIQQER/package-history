@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace QUITests\History\Exception;
 
 use PHPUnit\Framework\TestCase;

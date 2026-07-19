@@ -7,10 +7,12 @@
 namespace QUI\History;
 
 use DateTime;
+use Doctrine\DBAL\Exception as DbalException;
 use Exception;
 use PCSG\PhpHtmlDiff\HtmlDiff;
 use QUI;
 use QUI\Cache\Manager as CacheManager;
+use QUI\Utils\Doctrine;
 
 use function current;
 use function is_int;
@@ -69,24 +71,26 @@ class Site
         try {
             $created = date('Y-m-d H:i:s');
 
-            $countResult = QUI::getDataBase()->fetch([
-                'count' => 1,
-                'from' => $table,
-                'where' => [
-                    'id' => $Site->getId(),
-                    'created' => $created
-                ]
-            ]);
+            $QueryBuilder = QUI::getQueryBuilder();
+            $entryExists = (int)$QueryBuilder
+                ->select('COUNT(*)')
+                ->from(Doctrine::quoteIdentifier($table))
+                ->where($QueryBuilder->expr()->eq('id', ':siteId'))
+                ->andWhere($QueryBuilder->expr()->eq('created', ':created'))
+                ->setParameter('siteId', $Site->getId())
+                ->setParameter('created', $created)
+                ->executeQuery()
+                ->fetchOne();
 
-            if (empty(current(current($countResult)))) {
-                QUI::getDataBase()->insert($table, [
+            if ($entryExists === 0) {
+                QUI::getDataBaseConnection()->insert(Doctrine::quoteIdentifier($table), [
                     'id' => $Site->getId(),
                     'created' => $created,
                     'data' => json_encode($Site->getAttributes()),
                     'uid' => QUI::getUserBySession()->getUUID()
                 ]);
             }
-        } catch (QUI\Exception $Exception) {
+        } catch (QUI\Exception | DbalException $Exception) {
             QUI\System\Log::addAlert($Exception->getMessage());
 
             return;
@@ -99,18 +103,14 @@ class Site
             return;
         }
 
-        $result = QUI::getDataBase()->fetch([
-            'from' => $table,
-            'count' => [
-                'select' => 'id',
-                'as' => 'count'
-            ],
-            'where' => [
-                'id' => $Site->getId()
-            ]
-        ]);
-
-        $count = (int)$result[0]['count'];
+        $QueryBuilder = QUI::getQueryBuilder();
+        $count = (int)$QueryBuilder
+            ->select('COUNT(id)')
+            ->from(Doctrine::quoteIdentifier($table))
+            ->where($QueryBuilder->expr()->eq('id', ':siteId'))
+            ->setParameter('siteId', $Site->getId())
+            ->executeQuery()
+            ->fetchOne();
 
         if ($count <= $limit) {
             return;
@@ -121,17 +121,22 @@ class Site
 
         // could not delete directly
         // some mysql version don't support that, so we must delete the entries in an extra step
-        $result = QUI::getDataBase()->fetch([
-            'from' => $table,
-            'where' => [
-                'id' => $Site->getId()
-            ],
-            'order' => 'created ASC',
-            'limit' => '0,' . $overflow
-        ]);
+        $QueryBuilder = QUI::getQueryBuilder();
+        $result = $QueryBuilder
+            ->select('id', 'created')
+            ->from(Doctrine::quoteIdentifier($table))
+            ->where($QueryBuilder->expr()->eq('id', ':siteId'))
+            ->setParameter('siteId', $Site->getId())
+            ->orderBy('created', 'ASC')
+            ->setMaxResults((int)$overflow)
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($result as $entry) {
-            QUI::getDataBase()->delete($table, $entry);
+            QUI::getDataBaseConnection()->delete(Doctrine::quoteIdentifier($table), [
+                'id' => $entry['id'],
+                'created' => $entry['created']
+            ]);
         }
     }
 
@@ -150,13 +155,15 @@ class Site
         $result = [];
 
 
-        $list = QUI::getDataBase()->fetch([
-            'from' => $table,
-            'order' => 'created DESC',
-            'where' => [
-                'id' => $Site->getId()
-            ]
-        ]);
+        $QueryBuilder = QUI::getQueryBuilder();
+        $list = $QueryBuilder
+            ->select('created', 'data', 'uid')
+            ->from(Doctrine::quoteIdentifier($table))
+            ->where($QueryBuilder->expr()->eq('id', ':siteId'))
+            ->setParameter('siteId', $Site->getId())
+            ->orderBy('created', 'DESC')
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($list as $entry) {
             $username = '';
@@ -191,7 +198,7 @@ class Site
     public static function getHistoryEntry(QUI\Interfaces\Projects\Site $Site, DateTime | int $date): array
     {
         if (is_int($date)) {
-            $Date = new DateTime((string)$date);
+            $Date = (new DateTime())->setTimestamp($date);
         } else {
             $Date = $date;
         }
@@ -200,21 +207,25 @@ class Site
         $Project = $Site->getProject();
         $table = QUI::getDBProjectTableName('archiv', $Project);
 
-        $result = QUI::getDataBase()->fetch([
-            'from' => $table,
-            'where' => [
-                'created' => $Date->format('Y-m-d H:i:s')
-            ],
-            'limit' => 1
-        ]);
+        $QueryBuilder = QUI::getQueryBuilder();
+        $dataJson = $QueryBuilder
+            ->select('data')
+            ->from(Doctrine::quoteIdentifier($table))
+            ->where($QueryBuilder->expr()->eq('id', ':siteId'))
+            ->andWhere($QueryBuilder->expr()->eq('created', ':created'))
+            ->setParameter('siteId', $Site->getId())
+            ->setParameter('created', $Date->format('Y-m-d H:i:s'))
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchOne();
 
-        if (!isset($result[0])) {
+        if ($dataJson === false) {
             throw new QUI\Exception(
                 'History entry not exist'
             );
         }
 
-        $data = json_decode($result[0]['data'], true);
+        $data = json_decode((string)$dataJson, true);
 
         return is_array($data) ? $data : [];
     }

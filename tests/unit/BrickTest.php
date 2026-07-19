@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace QUITests\History;
 
 use DateTime;
@@ -7,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use QUI\Bricks\Brick;
 use QUI\History\Brick as HistoryBrick;
 
-class BrickUnitTest extends TestCase
+class BrickTest extends TestCase
 {
     /** @var class-string<HistoryBrick> */
     private static string $BrickClass;
