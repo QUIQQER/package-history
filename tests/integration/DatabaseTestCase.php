@@ -118,7 +118,7 @@ abstract class DatabaseTestCase extends TestCase
         $Users->method('getUserBySession')->willReturn($SessionUser);
         $Users->method('get')->willReturnCallback(
             static function (int|string $id) use ($KnownUser): User {
-                if ($id === 'known-user') {
+                if ($id === 'known-user' || (string)$id === '42') {
                     return $KnownUser;
                 }
 
