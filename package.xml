@@ -8,6 +8,15 @@
             <locale group="quiqqer/history" var="package.description"/>
         </description>
 
+        <capabilities schemaVersion="1">
+            <capability id="content.version-history">
+                <title>Content version history</title>
+                <description>
+                    Records configurable version histories for sites and bricks and lets administrators preview, compare, and restore earlier content states.
+                </description>
+            </capability>
+        </capabilities>
+
         <image src="URL_OPT_DIR/quiqqer/history/bin/images/Logo.jpg"/>
 
         <preview>
