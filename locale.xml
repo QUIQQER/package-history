@@ -4,92 +4,202 @@
         <locale name="btn.preview.text">
             <de><![CDATA[Vorschau anzeigen]]></de>
             <en><![CDATA[Show preview]]></en>
+            <es><![CDATA[Mostrar vista previa]]></es>
+            <pt><![CDATA[Mostrar pré-visualização]]></pt>
+            <fr><![CDATA[Afficher l’aperçu]]></fr>
+            <it><![CDATA[Mostra anteprima]]></it>
+            <pl><![CDATA[Pokaż podgląd]]></pl>
         </locale>
         <locale name="restore.window.information">
-            <de><![CDATA[Möchten sie den Archiv-Eintrag vom [date] wirklich zurück spielen?<br />
-                Die aktuellen Daten der Seite werden somit überschrieben.]]></de>
-            <en><![CDATA[Would you really restore the archive entry of [date]?<br />
-                The current data for the site are thus overwritten.]]></en>
+            <de><![CDATA[Möchten Sie den Archiv-Eintrag vom [date] wirklich wiederherstellen?<br />
+                Die aktuellen Daten werden dabei überschrieben.]]></de>
+            <en><![CDATA[Do you really want to restore the archive entry from [date]?<br />
+                The current data will be overwritten.]]></en>
+            <es><![CDATA[¿Desea restaurar la versión archivada del [date]?<br />
+                Se sobrescribirán los datos actuales.]]></es>
+            <pt><![CDATA[Pretende restaurar a versão arquivada de [date]?<br />
+                Os dados atuais serão substituídos.]]></pt>
+            <fr><![CDATA[Voulez-vous vraiment restaurer la version archivée du [date] ?<br />
+                Les données actuelles seront écrasées.]]></fr>
+            <it><![CDATA[Vuoi davvero ripristinare la versione archiviata del [date]?<br />
+                I dati attuali verranno sovrascritti.]]></it>
+            <pl><![CDATA[Czy na pewno chcesz przywrócić zarchiwizowaną wersję z dnia [date]?<br />
+                Bieżące dane zostaną nadpisane.]]></pl>
         </locale>
         <locale name="restore.window.text">
-            <de><![CDATA[Archiv-Eintrag wieder herstellen?]]></de>
-            <en><![CDATA[Restore archive entry again?]]></en>
+            <de><![CDATA[Archiv-Eintrag wiederherstellen?]]></de>
+            <en><![CDATA[Restore archive entry?]]></en>
+            <es><![CDATA[¿Restaurar la versión archivada?]]></es>
+            <pt><![CDATA[Restaurar a versão arquivada?]]></pt>
+            <fr><![CDATA[Restaurer la version archivée ?]]></fr>
+            <it><![CDATA[Ripristinare la versione archiviata?]]></it>
+            <pl><![CDATA[Przywrócić zarchiwizowaną wersję?]]></pl>
         </locale>
         <locale name="restore.window.title">
-            <de><![CDATA[Archiv-Eintrag wieder herstellen?]]></de>
-            <en><![CDATA[Restore archive entry again?]]></en>
+            <de><![CDATA[Archiv-Eintrag wiederherstellen?]]></de>
+            <en><![CDATA[Restore archive entry?]]></en>
+            <es><![CDATA[¿Restaurar la versión archivada?]]></es>
+            <pt><![CDATA[Restaurar a versão arquivada?]]></pt>
+            <fr><![CDATA[Restaurer la version archivée ?]]></fr>
+            <it><![CDATA[Ripristinare la versione archiviata?]]></it>
+            <pl><![CDATA[Przywrócić zarchiwizowaną wersję?]]></pl>
         </locale>
         <locale name="btn.revert.text">
             <de><![CDATA[Version wiederherstellen]]></de>
             <en><![CDATA[Restore version]]></en>
+            <es><![CDATA[Restaurar versión]]></es>
+            <pt><![CDATA[Restaurar versão]]></pt>
+            <fr><![CDATA[Restaurer la version]]></fr>
+            <it><![CDATA[Ripristina versione]]></it>
+            <pl><![CDATA[Przywróć wersję]]></pl>
         </locale>
         <locale name="btn.compare.text">
             <de><![CDATA[Auswahl vergleichen]]></de>
             <en><![CDATA[Compare Selection]]></en>
+            <es><![CDATA[Comparar selección]]></es>
+            <pt><![CDATA[Comparar seleção]]></pt>
+            <fr><![CDATA[Comparer la sélection]]></fr>
+            <it><![CDATA[Confronta selezione]]></it>
+            <pl><![CDATA[Porównaj zaznaczone]]></pl>
         </locale>
     </groups>
     <groups name="quiqqer/history" datatype="js,php">
         <locale name="settings.limit.text">
             <de><![CDATA[Verlaufseinträge pro Seite]]></de>
-            <en><![CDATA[History entries per site]]></en>
+            <en><![CDATA[History entries per page]]></en>
+            <es><![CDATA[Entradas del historial por página]]></es>
+            <pt><![CDATA[Entradas do histórico por página]]></pt>
+            <fr><![CDATA[Entrées d’historique par page]]></fr>
+            <it><![CDATA[Voci della cronologia per pagina]]></it>
+            <pl><![CDATA[Wpisy historii na stronę]]></pl>
         </locale>
         <locale name="settings.limit.description">
-            <de><![CDATA[Wie viele Versionen dürfen pro Seite maximal erstellt werden?]]></de>
-            <en><![CDATA[What is the maximum number of versions that can be created per site?]]></en>
+            <de><![CDATA[Wie viele Versionen sollen pro Seite maximal gespeichert bleiben?]]></de>
+            <en><![CDATA[What is the maximum number of versions to retain per page?]]></en>
+            <es><![CDATA[¿Cuál es el número máximo de versiones que se conservarán por página?]]></es>
+            <pt><![CDATA[Qual é o número máximo de versões a guardar por página?]]></pt>
+            <fr><![CDATA[Quel est le nombre maximal de versions à conserver par page ?]]></fr>
+            <it><![CDATA[Quante versioni vuoi conservare al massimo per pagina?]]></it>
+            <pl><![CDATA[Ile wersji każdej strony ma być maksymalnie przechowywanych?]]></pl>
         </locale>
         <locale name="settings.limit.brick.text">
             <de><![CDATA[Verlaufseinträge pro Baustein]]></de>
             <en><![CDATA[History entries per brick]]></en>
+            <es><![CDATA[Entradas del historial por bloque]]></es>
+            <pt><![CDATA[Entradas do histórico por bloco]]></pt>
+            <fr><![CDATA[Entrées d’historique par bloc]]></fr>
+            <it><![CDATA[Voci della cronologia per blocco]]></it>
+            <pl><![CDATA[Wpisy historii na blok]]></pl>
         </locale>
         <locale name="settings.limit.brick.description">
-            <de><![CDATA[Wie viele Versionen dürfen pro Baustein maximal erstellt werden?]]></de>
-            <en><![CDATA[What is the maximum number of versions that can be created per brick?]]></en>
+            <de><![CDATA[Wie viele Versionen sollen pro Baustein maximal gespeichert bleiben?]]></de>
+            <en><![CDATA[What is the maximum number of versions to retain per brick?]]></en>
+            <es><![CDATA[¿Cuál es el número máximo de versiones que se conservarán por bloque?]]></es>
+            <pt><![CDATA[Qual é o número máximo de versões a guardar por bloco?]]></pt>
+            <fr><![CDATA[Quel est le nombre maximal de versions à conserver par bloc ?]]></fr>
+            <it><![CDATA[Quante versioni vuoi conservare al massimo per blocco?]]></it>
+            <pl><![CDATA[Ile wersji każdego bloku ma być maksymalnie przechowywanych?]]></pl>
         </locale>
         <locale name="title">
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
+            <es><![CDATA[Historial]]></es>
+            <pt><![CDATA[Histórico]]></pt>
+            <fr><![CDATA[Historique]]></fr>
+            <it><![CDATA[Cronologia]]></it>
+            <pl><![CDATA[Historia]]></pl>
         </locale>
         <locale name="description">
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
+            <es><![CDATA[Historial]]></es>
+            <pt><![CDATA[Histórico]]></pt>
+            <fr><![CDATA[Historique]]></fr>
+            <it><![CDATA[Cronologia]]></it>
+            <pl><![CDATA[Historia]]></pl>
         </locale>
         <locale name="package.title">
             <de><![CDATA[Verlauf]]></de>
             <en><![CDATA[History]]></en>
+            <es><![CDATA[Historial]]></es>
+            <pt><![CDATA[Histórico]]></pt>
+            <fr><![CDATA[Historique]]></fr>
+            <it><![CDATA[Cronologia]]></it>
+            <pl><![CDATA[Historia]]></pl>
         </locale>
         <locale name="package.description">
-            <de><![CDATA[Das History Modul speichert Änderungen an Bausteinen und Seiten als Versionen und ermöglicht es alte Versionen anzusehen und wiederherzustellen.]]></de>
-            <en><![CDATA[The History module saves changes to bricks and sites as versions and allows to view and restore old versions.]]></en>
+            <de><![CDATA[Das History-Modul speichert Änderungen an Bausteinen und Seiten als Versionen und ermöglicht es, alte Versionen anzusehen und wiederherzustellen.]]></de>
+            <en><![CDATA[The History module saves changes to bricks and pages as versions and allows users to view and restore old versions.]]></en>
+            <es><![CDATA[El módulo de historial guarda los cambios en bloques y páginas como versiones y permite consultar y restaurar versiones anteriores.]]></es>
+            <pt><![CDATA[O módulo de histórico guarda as alterações a blocos e páginas como versões e permite consultar e restaurar versões anteriores.]]></pt>
+            <fr><![CDATA[Le module d’historique enregistre les modifications des blocs et des pages sous forme de versions et permet de consulter et de restaurer les versions précédentes.]]></fr>
+            <it><![CDATA[Il modulo Cronologia salva le modifiche a blocchi e pagine sotto forma di versioni e consente di visualizzare e ripristinare le versioni precedenti.]]></it>
+            <pl><![CDATA[Moduł historii zapisuje zmiany bloków i stron jako wersje oraz umożliwia przeglądanie i przywracanie wcześniejszych wersji.]]></pl>
         </locale>
         <locale name="settings.title">
             <de><![CDATA[Verlauf-Einstellungen]]></de>
             <en><![CDATA[History settings]]></en>
+            <es><![CDATA[Ajustes del historial]]></es>
+            <pt><![CDATA[Definições do histórico]]></pt>
+            <fr><![CDATA[Paramètres de l’historique]]></fr>
+            <it><![CDATA[Impostazioni della cronologia]]></it>
+            <pl><![CDATA[Ustawienia historii]]></pl>
         </locale>
     </groups>
     <groups name="quiqqer/history" datatype="php">
         <locale name="exception.history.entry.not.exist">
             <de><![CDATA[Der History-Eintrag existiert nicht.]]></de>
-            <en><![CDATA[History entry not exist.]]></en>
+            <en><![CDATA[The history entry does not exist.]]></en>
+            <es><![CDATA[La entrada del historial no existe.]]></es>
+            <pt><![CDATA[A entrada do histórico não existe.]]></pt>
+            <fr><![CDATA[L’entrée d’historique n’existe pas.]]></fr>
+            <it><![CDATA[La voce della cronologia non esiste.]]></it>
+            <pl><![CDATA[Wpis historii nie istnieje.]]></pl>
         </locale>
         <locale name="console.initialize.description">
             <de><![CDATA[Erstellt den ersten Eintrag im Verlauf aller unterstützten Elemente.]]></de>
             <en><![CDATA[Creates the first entry in the history of all supported elements.]]></en>
+            <es><![CDATA[Crea la primera entrada en el historial de todos los elementos compatibles.]]></es>
+            <pt><![CDATA[Cria a primeira entrada no histórico de todos os elementos suportados.]]></pt>
+            <fr><![CDATA[Crée la première entrée dans l’historique de tous les éléments pris en charge.]]></fr>
+            <it><![CDATA[Crea la prima voce nella cronologia di tutti gli elementi supportati.]]></it>
+            <pl><![CDATA[Tworzy pierwszy wpis w historii wszystkich obsługiwanych elementów.]]></pl>
         </locale>
         <locale name="console.initialize.process.project">
-            <de><![CDATA[Verarbeite Project '[projectName]' in Sprache '[projectLanguage]']]></de>
+            <de><![CDATA[Verarbeite Projekt '[projectName]' in Sprache '[projectLanguage]']]></de>
             <en><![CDATA[Processing project '[projectName]' in language '[projectLanguage]']]></en>
+            <es><![CDATA[Procesando el proyecto '[projectName]' en el idioma '[projectLanguage]']]></es>
+            <pt><![CDATA[A processar o projeto '[projectName]' no idioma '[projectLanguage]']]></pt>
+            <fr><![CDATA[Traitement du projet « [projectName] » dans la langue « [projectLanguage] »]]></fr>
+            <it><![CDATA[Elaborazione del progetto '[projectName]' nella lingua '[projectLanguage]']]></it>
+            <pl><![CDATA[Przetwarzanie projektu „[projectName]” w języku „[projectLanguage]”]]></pl>
         </locale>
         <locale name="console.initialize.process.site.error">
             <de><![CDATA[Seite mit ID '[siteId]' konnte nicht verarbeitet werden: '[reason]']]></de>
-            <en><![CDATA[Could not process site with ID '[siteId]': '[reason]']]></en>
+            <en><![CDATA[Could not process page with ID '[siteId]': '[reason]']]></en>
+            <es><![CDATA[No se ha podido procesar la página con ID '[siteId]': '[reason]']]></es>
+            <pt><![CDATA[Não foi possível processar a página com o ID '[siteId]': '[reason]']]></pt>
+            <fr><![CDATA[Impossible de traiter la page avec l’ID « [siteId] » : « [reason] »]]></fr>
+            <it><![CDATA[Impossibile elaborare la pagina con ID '[siteId]': '[reason]']]></it>
+            <pl><![CDATA[Nie udało się przetworzyć strony o identyfikatorze „[siteId]”: „[reason]”]]></pl>
         </locale>
         <locale name="console.initialize.process.brick.error.getBricks">
             <de><![CDATA[Konnte Bricks für dieses Projekt nicht laden: '[reason]']]></de>
             <en><![CDATA[Could not load bricks for this project: '[reason]']]></en>
+            <es><![CDATA[No se han podido cargar los bloques de este proyecto: '[reason]']]></es>
+            <pt><![CDATA[Não foi possível carregar os blocos deste projeto: '[reason]']]></pt>
+            <fr><![CDATA[Impossible de charger les blocs de ce projet : « [reason] »]]></fr>
+            <it><![CDATA[Impossibile caricare i blocchi di questo progetto: '[reason]']]></it>
+            <pl><![CDATA[Nie udało się wczytać bloków tego projektu: „[reason]”]]></pl>
         </locale>
         <locale name="console.initialize.process.brick.error.saveBrick">
             <de><![CDATA[Konnte Brick mit ID '[brickId]' nicht verarbeiten: '[reason]']]></de>
             <en><![CDATA[Could not process brick with ID '[brickId]': '[reason]']]></en>
+            <es><![CDATA[No se ha podido procesar el bloque con ID '[brickId]': '[reason]']]></es>
+            <pt><![CDATA[Não foi possível processar o bloco com o ID '[brickId]': '[reason]']]></pt>
+            <fr><![CDATA[Impossible de traiter le bloc avec l’ID « [brickId] » : « [reason] »]]></fr>
+            <it><![CDATA[Impossibile elaborare il blocco con ID '[brickId]': '[reason]']]></it>
+            <pl><![CDATA[Nie udało się przetworzyć bloku o identyfikatorze „[brickId]”: „[reason]”]]></pl>
         </locale>
     </groups>
 </locales>
